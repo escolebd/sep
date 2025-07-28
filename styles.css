@@ -238,3 +238,16 @@
                 flex-direction: column;
             }
         }
+ nav a {
+    background-color: #f2f2f2;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+
+  nav a:hover {
+    background-color: #d0e7ff;
+  }

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NNN24HJD');</script>
+<!-- End Google Tag Manager -->
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "Nova Tradução na Linguagem de Hoje",
+      "image": [
+        "/app/imagens/512x512.png"
+       ],
+      "datePublished": "2025-07-27T04:40:00-03:00",
+      "dateModified": "2025-07-27T04:40:00-03:00",
+      "author": [{
+          "@type": "Person",
+          "name": "Septuaginta",
+          "url": "https://www.septuaginta.com.br/"
+      }]
+    }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Tradução na Linguagem de Hoje</title>
+<link rel="manifest" href="/app/manifest.json">
+<meta name="theme-color" content="#000000">
+<meta property="og:image" content="/app/imagens/512x512.png">
+<link rel="icon" href="/app/imagens/512x512.png" type="image/x-icon">
+<meta name="description" content="Bíblia Nova Tradução na Linguagem de Hoje: linguagem simples e acessível, ideal para novos leitores e estudos devocionais.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 Nova Tradução na Linguagem de Hoje</h1>
+            <p>Explore as Escrituras Sagradas</p>
+<footer style="margin-top: 50px; text-align: center;">
+  <p>Pesquisar no site:</p>
+  <form action="https://www.google.com/search" method="get" class="search-form">
+    <input type="text" name="q" placeholder="Buscar em septuaginta.com.br" required
+           style="padding: 8px; width: 250px; max-width: 90%; border: 1px solid #ccc; border-radius: 5px;">
+    <input type="hidden" name="sitesearch" value="septuaginta.com.br">
+    <button type="submit"
+            style="padding: 8px 12px; margin-left: 5px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      🔍 Buscar
+    </button>
+  </form>
+</footer>
+
+        </div>
+<nav class="navbar">
+    <ul class="nav-list">
+        <li><a href="/">🏠 Início</a></li>
+        <li><a href="/contato.html">Contato</a></li>
+        <li><a href="/termos-de-uso.html">Termos de Usos</a></li>
+        <li><a href="/politica-de-privacidade.html">Politica de Privacidade</a></li>
+        <li><a href="/sobre.html">Sobre</a></li>
+    </ul>
+</nav>
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="pesquisa na Bíblia aqui..." />
+                <button id="searchBtn" class="search-btn">🔍 Pesquisar</button>
+            </div>
+
+            <div class="book-selector">
+                <select id="bookSelect" class="book-select">
+                    <option value="">Selecione um livro...</option>
+                </select>
+                <select id="chapterSelect" class="chapter-select">
+                    <option value="">Selecione um capítulo...</option>
+                </select>
+                <button id="loadChapterBtn" class="search-btn">Carregar Capítulo</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="chapterTitle" class="chapter-title"></div>
+            <div id="contentArea"></div>
+<div class="share-buttons" style="margin-top: 20px; text-align: center;">
+  <p style="margin-bottom: 10px; color: #7f8c8d;">Compartilhar:</p>
+  <a href="https://api.whatsapp.com/send?text=Confira%20esta%20Bíblia:%20https://www.septuaginta.com.br" target="_blank" title="WhatsApp" style="margin: 0 5px;">📱</a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.septuaginta.com.br" target="_blank" title="Facebook" style="margin: 0 5px;">📘</a>
+  <a href="https://twitter.com/intent/tweet?text=Confira%20esta%20Bíblia&url=https://www.septuaginta.com.br" target="_blank" title="Twitter" style="margin: 0 5px;">🐦</a>
+  <button onclick="copyShareLink()" title="Copiar link" style="margin-left: 10px; padding: 4px 8px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">🔗 Copiar link</button>
+</div>
+
+        </div>
+    </div>
+
+    <script>
+        let bibleData = [];
+        let currentSearchResults = [];
+        let loadedBooks = new Set(); // Para rastrear quais livros já foram carregados
+
+        // Carrega a Bíblia da API específica com carregamento otimizado
+        async function loadBible() {
+            try {
+                showLoading();
+                
+                // Usando CORS proxy apenas se necessário
+                const apiUrl = '/ntlh.json';
+                let response;
+                
+                try {
+                    // Tentativa direta primeiro
+                    response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error('Resposta não OK');
+                } catch (error) {
+                    // Se falhar, tenta com proxy CORS
+                    console.log('Tentando com proxy CORS...');
+                    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(apiUrl);
+                    response = await fetch(proxyUrl);
+                }
+                
+                const data = await response.json();
+                
+                if (data && Array.isArray(data)) {
+                    bibleData = data;
+                    populateBookSelector();
+                    
+                    // Carrega apenas Gênesis inicialmente
+                    await loadInitialContent();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar a Bíblia:', error);
+                showError();
+            }
+        }
+
+        // Carrega o conteúdo inicial (Gênesis 1)
+        async function loadInitialContent() {
+            const genesisIndex = bibleData.findIndex(book => book.abbrev === 'Gn');
+            if (genesisIndex !== -1) {
+                loadedBooks.add(genesisIndex); // Marca como carregado
+                const genesisBook = bibleData[genesisIndex];
+                displayChapter(genesisBook, 0, 'Gênesis');
+            }
+        }
+
+        // Popula o seletor de livros
+        function populateBookSelector() {
+            const bookSelect = document.getElementById('bookSelect');
+            bookSelect.innerHTML = '<option value="">Selecione um livro...</option>';
+            
+            bibleData.forEach((book, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = getFullBookName(book.abbrev);
+                bookSelect.appendChild(option);
+            });
+        }
+
+        // Retorna o nome completo do livro
+        function getFullBookName(abbrev) {
+            const bookNames = {
+                'Gn': 'Gênesis', 'Ex': 'Êxodo', 'Lv': 'Levítico', 'Nm': 'Números', 'Dt': 'Deuteronômio',
+                'Js': 'Josué', 'Jz': 'Juízes', 'Rt': 'Rute', '1Sm': '1 Samuel', '2Sm': '2 Samuel',
+                '1Rs': '1 Reis', '2Rs': '2 Reis', '1Cr': '1 Crônicas', '2Cr': '2 Crônicas', 'Ed': 'Esdras',
+                'Ne': 'Neemias', 'Et': 'Ester', 'Jó': 'Jó', 'Sl': 'Salmos', 'Pv': 'Provérbios',
+                'Ec': 'Eclesiastes', 'Ct': 'Cantares', 'Is': 'Isaías', 'Jr': 'Jeremias', 'Lm': 'Lamentações',
+                'Ez': 'Ezequiel', 'Dn': 'Daniel', 'Os': 'Oséias', 'Jl': 'Joel', 'Am': 'Amós',
+                'Ob': 'Obadias', 'Jn': 'Jonas', 'Mq': 'Miquéias', 'Na': 'Naum', 'Hc': 'Habacuque',
+                'Sf': 'Sofonias', 'Ag': 'Ageu', 'Zc': 'Zacarias', 'Ml': 'Malaquias', 'Mt': 'Mateus',
+                'Mc': 'Marcos', 'Lc': 'Lucas', 'Jo': 'João', 'At': 'Atos', 'Rm': 'Romanos',
+                '1Co': '1 Coríntios', '2Co': '2 Coríntios', 'Gl': 'Gálatas', 'Ef': 'Efésios', 'Fp': 'Filipenses',
+                'Cl': 'Colossenses', '1Ts': '1 Tessalonicenses', '2Ts': '2 Tessalonicenses', '1Tm': '1 Timóteo',
+                '2Tm': '2 Timóteo', 'Tt': 'Tito', 'Fm': 'Filemom', 'Hb': 'Hebreus', 'Tg': 'Tiago',
+                '1Pe': '1 Pedro', '2Pe': '2 Pedro', '1Jo': '1 João', '2Jo': '2 João', '3Jo': '3 João',
+                'Jd': 'Judas', 'Ap': 'Apocalipse'
+            };
+            return bookNames[abbrev] || abbrev;
+        }
+
+        // Popula o seletor de capítulos
+        function populateChapterSelector(bookIndex) {
+            const chapterSelect = document.getElementById('chapterSelect');
+            chapterSelect.innerHTML = '<option value="">Selecione um capítulo...</option>';
+            
+            if (bookIndex !== '' && bibleData[bookIndex]) {
+                const chapters = bibleData[bookIndex].chapters;
+                for (let i = 0; i < chapters.length; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = `Capítulo ${i + 1}`;
+                    chapterSelect.appendChild(option);
+                }
+            }
+        }
+
+        // Exibe um capítulo
+        function displayChapter(book, chapterIndex, bookName) {
+            const chapter = book.chapters[chapterIndex];
+            const chapterTitle = document.getElementById('chapterTitle');
+            const contentArea = document.getElementById('contentArea');
+            
+            chapterTitle.textContent = `${bookName} - Capítulo ${chapterIndex + 1}`;
+            
+            let html = '';
+            chapter.forEach((verse, index) => {
+                html += `
+                    <div class="verse">
+                        <span class="verse-number">${index + 1}</span>
+                        <span class="verse-text">${verse}</span>
+                    </div>
+                `;
+            });
+            
+            contentArea.innerHTML = html;
+        }
+
+        // Realiza pesquisa
+        function performSearch(searchTerm) {
+            if (!searchTerm.trim()) {
+                alert('Digite um termo para pesquisar');
+                return;
+            }
+
+            showLoading('Pesquisando...');
+            currentSearchResults = [];
+            
+            const searchTermLower = searchTerm.toLowerCase();
+            
+            // Como todos os dados já estão carregados, pesquisamos diretamente
+            bibleData.forEach((book) => {
+                const bookName = getFullBookName(book.abbrev);
+                
+                book.chapters.forEach((chapter, chapterIndex) => {
+                    chapter.forEach((verse, verseIndex) => {
+                        if (verse.toLowerCase().includes(searchTermLower)) {
+                            currentSearchResults.push({
+                                book: bookName,
+                                chapter: chapterIndex + 1,
+                                verse: verseIndex + 1,
+                                text: verse,
+                                searchTerm: searchTerm
+                            });
+                        }
+                    });
+                });
+            });
+            
+            displaySearchResults();
+        }
+
+        // Exibe resultados da pesquisa
+        function displaySearchResults() {
+            const chapterTitle = document.getElementById('chapterTitle');
+            const contentArea = document.getElementById('contentArea');
+            
+            if (currentSearchResults.length === 0) {
+                chapterTitle.textContent = 'Nenhum resultado encontrado';
+                contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">Tente outros termos de pesquisa.</p>';
+                return;
+            }
+            
+            chapterTitle.textContent = `Resultados da Pesquisa (${currentSearchResults.length} encontrados)`;
+            
+            let html = '';
+            currentSearchResults.forEach((result) => {
+                const highlightedText = highlightSearchTerm(result.text, result.searchTerm);
+                html += `
+                    <div class="search-result-item">
+                        <div class="result-reference">${result.book} ${result.chapter}:${result.verse}</div>
+                        <div class="result-text">${highlightedText}</div>
+                    </div>
+                `;
+            });
+            
+            contentArea.innerHTML = html;
+        }
+
+        // Destaca o termo pesquisado
+        function highlightSearchTerm(text, searchTerm) {
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Mostra indicador de carregamento
+        function showLoading(message = 'Carregando...') {
+            document.getElementById('contentArea').innerHTML = 
+                `<div class="loading">⏳ ${message}</div>`;
+        }
+
+        // Mostra mensagem de erro
+        function showError() {
+            document.getElementById('contentArea').innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <h2 style="color: #e74c3c;">Erro ao carregar a Bíblia</h2>
+                    <p style="color: #7f8c8d;">Não foi possível carregar os dados da API.</p>
+                    <button onclick="location.reload()" class="search-btn" style="margin-top: 15px;">Tentar Novamente</button>
+                </div>
+            `;
+        }
+
+        // Event Listeners
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const searchTerm = document.getElementById('searchInput').value;
+            performSearch(searchTerm);
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = document.getElementById('searchInput').value;
+                performSearch(searchTerm);
+            }
+        });
+
+        document.getElementById('bookSelect').addEventListener('change', (e) => {
+            const bookIndex = e.target.value;
+            if (bookIndex !== '') {
+                loadedBooks.add(parseInt(bookIndex)); // Marca como carregado
+                populateChapterSelector(bookIndex);
+            }
+        });
+
+        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+            const bookIndex = document.getElementById('bookSelect').value;
+            const chapterIndex = document.getElementById('chapterSelect').value;
+            
+            if (bookIndex !== '' && chapterIndex !== '') {
+                const book = bibleData[bookIndex];
+                const bookName = getFullBookName(book.abbrev);
+                displayChapter(book, parseInt(chapterIndex), bookName);
+            } else {
+                alert('Selecione um livro e um capítulo');
+            }
+        });
+
+        // Carrega a Bíblia ao iniciar a página
+        window.addEventListener('load', loadBible);
+function copyShareLink() {
+    const url = "https://www.septuaginta.com.br";
+    navigator.clipboard.writeText(url).then(() => {
+        alert("Link copiado para a área de transferência!");
+    }).catch(() => {
+        alert("Não foi possível copiar o link.");
+    });
+}
+    </script>
+
+<footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
+    <nav class="navbar">
+    <ul class="nav-list">
+        <li><a href="/">🏠 Início</a></li>
+        <li><a href="/contato.html">Contato</a></li>
+        <li><a href="/termos-de-uso.html">Termos de Usos</a></li>
+        <li><a href="/politica-de-privacidade.html">Politica de Privacidade</a></li>
+        <li><a href="/sobre.html">Sobre</a></li>
+    </ul>
+</nav>
+    <p>&copy; Sistema de Pesquisa da Bíblia | Desenvolvido por <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a></p>
+    <p>Todos os direitos reservados.</p>
+</footer>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NNN24HJD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script src="/app/script.js"></script>
+</body>
+</html>
