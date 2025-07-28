@@ -33,7 +33,292 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="theme-color" content="#000000">
 <meta property="og:image" content="/app/imagens/512x512.png">
 <link rel="icon" href="/app/imagens/512x512.png" type="image/x-icon">
-<meta name="description" content="Bíblia Nova Almeida Atualizada: linguagem moderna, fluente e fiel aos originais, ideal para leitura, estudo e uso litúrgico.">
+<meta name="description" content="Bíblia Septuaginta: Antigo Testamento traduzido do hebraico para o grego por 70 sábios, base histórica do cristianismo primitivo.
+">
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-container {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .search-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .book-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .book-select, .chapter-select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .book-select:focus, .chapter-select:focus {
+            border-color: #3498db;
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .chapter-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+
+        .verse {
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .verse:hover {
+            transform: translateX(5px);
+            border-left-color: #3498db;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .verse-number {
+            font-weight: bold;
+            color: #3498db;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .verse-text {
+            color: #2c3e50;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+
+        .search-results {
+            margin-top: 20px;
+        }
+
+        .search-result-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid #3498db;
+        }
+
+        .result-reference {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 8px;
+        }
+
+        .result-text {
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, #f39c12, #f1c40f);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .share-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .share-buttons p {
+            margin-bottom: 10px;
+            color: #7f8c8d;
+        }
+
+        .share-buttons a {
+            margin: 0 5px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .search-form {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 8px;
+            width: 250px;
+            max-width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-form button {
+            padding: 8px 12px;
+            margin-left: 5px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-list a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-list a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        footer {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                min-width: auto;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .book-selector {
+                flex-direction: column;
+            }
+
+            .nav-list {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
