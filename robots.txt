@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: https://www.septuaginta.com.br/sitemap_index.xml
