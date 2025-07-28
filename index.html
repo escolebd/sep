@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NNN24HJD');</script>
+<!-- End Google Tag Manager -->
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "Almeida Corrigida e Fiel",
+      "image": [
+        "/app/imagens/512x512.png"
+       ],
+      "datePublished": "2025-04-14T13:40:00-03:00",
+      "dateModified": "2025-04-14T13:40:00-03:00",
+      "author": [{
+          "@type": "Person",
+          "name": "Septuaginta",
+          "url": "https://www.septuaginta.com.br/"
+      }]
+    }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Almeida Corrigida e Fiel</title>
-    <link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="/app/manifest.json">
+<meta name="theme-color" content="#000000">
+<meta property="og:image" content="/app/imagens/512x512.png">
+<link rel="icon" href="/app/imagens/512x512.png" type="image/x-icon">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -41,6 +70,14 @@
         <div class="content">
             <div id="chapterTitle" class="chapter-title"></div>
             <div id="contentArea"></div>
+<div class="share-buttons" style="margin-top: 20px; text-align: center;">
+  <p style="margin-bottom: 10px; color: #7f8c8d;">Compartilhar:</p>
+  <a href="https://api.whatsapp.com/send?text=Confira%20esta%20Bíblia:%20https://www.septuaginta.com.br" target="_blank" title="WhatsApp" style="margin: 0 5px;">📱</a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.septuaginta.com.br" target="_blank" title="Facebook" style="margin: 0 5px;">📘</a>
+  <a href="https://twitter.com/intent/tweet?text=Confira%20esta%20Bíblia&url=https://www.septuaginta.com.br" target="_blank" title="Twitter" style="margin: 0 5px;">🐦</a>
+  <button onclick="copyShareLink()" title="Copiar link" style="margin-left: 10px; padding: 4px 8px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">🔗 Copiar link</button>
+</div>
+
         </div>
     </div>
 
@@ -285,6 +322,14 @@
 
         // Carrega a Bíblia ao iniciar a página
         window.addEventListener('load', loadBible);
+function copyShareLink() {
+    const url = "https://www.septuaginta.com.br";
+    navigator.clipboard.writeText(url).then(() => {
+        alert("Link copiado para a área de transferência!");
+    }).catch(() => {
+        alert("Não foi possível copiar o link.");
+    });
+}
     </script>
 
 <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
@@ -300,5 +345,10 @@
     <p>&copy; Sistema de Pesquisa da Bíblia | Desenvolvido por <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a></p>
     <p>Todos os direitos reservados.</p>
 </footer>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NNN24HJD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script src="/app/script.js"></script>
 </body>
 </html>
