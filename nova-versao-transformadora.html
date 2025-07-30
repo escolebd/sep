@@ -392,5 +392,14 @@ function copyShareLink() {
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <script src="/app/script.js"></script>
+<script>
+// Bloqueia Ctrl + U
+document.addEventListener("keydown", function(e) {
+    if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        alert("Visualização do código-fonte desativada.");
+    }
+});
+</script>
 </body>
 </html>
