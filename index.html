@@ -143,6 +143,20 @@ body {
 </nav>
 <div class="blogger-box">
         <div id="caixa-promessa"> </div>
+
+ <label for="capitulo">Escolha o Capítulo:</label>
+    <select id="capitulo" onchange="atualizarAudio()">
+    </select>
+    
+    <br>
+    <audio id="player" controls>
+        Seu navegador não suporta áudio HTML5.
+    </audio>
+<br><br>
+<h3><a href="/afrikaanse-bybel.html">📖 Afrikaanse Bybel 1953 - Africano</a></h3>
+<h3><a href="/septuaginta.html">📖 Grego Septuaginta</a></h3>
+<h3><a href="/The-Unbound-Bible.html">📖 The Unbound Bible - Bíblia em Albanês</a></h3>
+
 <p><script>
 document.addEventListener("DOMContentLoaded", function() {
     const versiculos = [
@@ -4371,19 +4385,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <option value="Judas">Judas</option>
 <option value="Apocalipse">Apocalipse</option>
     </select>
-    
-    <label for="capitulo">Escolha o Capítulo:</label>
-    <select id="capitulo" onchange="atualizarAudio()">
-    </select>
-    
-    <br>
-    <audio id="player" controls>
-        Seu navegador não suporta áudio HTML5.
-    </audio>
-<br><br>
-<h3><a href="/afrikaanse-bybel.html">📖 Afrikaanse Bybel 1953 - Africano</a></h3>
-<h3><a href="/septuaginta.html">📖 Grego Septuaginta</a></h3>
-<script>
+
+ <script>   
         const audios = {
             
                   Genesis: [
