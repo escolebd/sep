@@ -141,8 +141,81 @@ body {
   <a href="/nova-traducao-na-linguagem-de-hoje.html">📖 NTLH</a>
   <a href="/septuaginta.html">📖 Septuaginta</a>
 </nav>
+
 <div class="blogger-box">
         <div id="caixa-promessa"> </div>
+
+<h2>Player de Áudio - Bíblia</h2>
+    
+    <label for="livro">Escolha o Livro:</label>
+    <select id="livro" onchange="atualizarCapitulos()">
+<option value="Genesis">Gênesis</option>
+<option value="Exodo">Êxodo</option>
+<option value="Levitico">Levítico</option>
+<option value="Numeros">Números</option>
+<option value="Deuteronomio">Deuteronômio</option>
+<option value="Josue">Josué</option>
+<option value="Juizes">Juízes</option>
+<option value="rute">Rute</option>
+<option value="lSamuel">1° Samuel</option>
+<option value="llSamuel">2° Samuel</option>
+<option value="lReis">1° Reis</option>
+<option value="llReis">2° Reis</option>
+<option value="lCronicas">1° Crônicas</option>
+<option value="llCronicas">2° Crônicas</option>
+<option value="Esdras">Esdras</option>
+<option value="Neemias">Neemias</option>
+<option value="Ester">Ester</option>
+<option value="Jo">Jó</option>
+<option value="Salmos">Salmos</option>
+<option value="Proverbios">Provérbios</option>
+<option value="Eclesiastes">Eclesiastes</option>
+<option value="Canticos">Cânticos</option>
+<option value="Isaias">Isaías</option>
+<option value="Jeremias">Jeremias</option>
+<option value="LAMENTACOES">Lamentações</option>
+<option value="Ezequiel">Ezequiel</option>
+<option value="Daniel">Daniel</option>
+<option value="OSEIAS">Oséias</option>
+<option value="Joel">Joel</option>
+<option value="Amos">Amós</option>
+<option value="OBADIAS">Obadias</option>
+<option value="Jonas">Jonas</option>
+<option value="Miqueias">Miquéias</option>
+<option value="Naum">Naum</option>
+<option value="habacuque">Habacuque</option>
+<option value="Sofonias">Sofonias</option>
+<option value="Ageu">Ageu</option>
+<option value="Zacarias">Zacarias</option>
+<option value="malaquias">Malaquias</option>
+<option value="Mateus">Mateus</option>
+<option value="Marcos">Marcos</option>
+<option value="Lucas">Lucas</option>
+<option value="Joao">João</option>
+<option value="Atos">Atos</option>
+<option value="Romanos">Romanos</option>
+<option value="lCorintios">1º Coríntios</option>
+<option value="llCorintios">2º Coríntios</option>
+<option value="Galatas">Gálatas</option>
+<option value="Efesios">Efésios</option>
+<option value="Filipenses">Filipenses</option>
+<option value="Colossenses">Colossenses</option>
+<option value="lTessalonicenses">1º Tessalonicenses</option>
+<option value="llTessalonicenses">2º Tessalonicenses</option>
+<option value="lTimoteo">1º Timóteo</option>
+<option value="llTimoteo">2º Timóteo</option>
+<option value="Tito">Tito</option>
+<option value="Filemom">Filemom</option>
+<option value="Hebreus">Hebreus</option>
+<option value="Tiago">Tiago</option>
+<option value="lPedro">1º Pedro</option>
+<option value="llPedro">2º Pedro</option>
+<option value="lJoao">1º João</option>
+<option value="llJoao">2º João</option>
+<option value="lllJoao">3º João</option>
+<option value="Judas">Judas</option>
+<option value="Apocalipse">Apocalipse</option>
+    </select>
 
  <label for="capitulo">Escolha o Capítulo:</label>
     <select id="capitulo" onchange="atualizarAudio()">
@@ -4311,80 +4384,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script></p>
 <p>&nbsp;</p>
-
-
-
-<h2>Player de Áudio - Bíblia</h2>
-    
-    <label for="livro">Escolha o Livro:</label>
-    <select id="livro" onchange="atualizarCapitulos()">
-<option value="Genesis">Gênesis</option>
-<option value="Exodo">Êxodo</option>
-<option value="Levitico">Levítico</option>
-<option value="Numeros">Números</option>
-<option value="Deuteronomio">Deuteronômio</option>
-<option value="Josue">Josué</option>
-<option value="Juizes">Juízes</option>
-<option value="rute">Rute</option>
-<option value="lSamuel">1° Samuel</option>
-<option value="llSamuel">2° Samuel</option>
-<option value="lReis">1° Reis</option>
-<option value="llReis">2° Reis</option>
-<option value="lCronicas">1° Crônicas</option>
-<option value="llCronicas">2° Crônicas</option>
-<option value="Esdras">Esdras</option>
-<option value="Neemias">Neemias</option>
-<option value="Ester">Ester</option>
-<option value="Jo">Jó</option>
-<option value="Salmos">Salmos</option>
-<option value="Proverbios">Provérbios</option>
-<option value="Eclesiastes">Eclesiastes</option>
-<option value="Canticos">Cânticos</option>
-<option value="Isaias">Isaías</option>
-<option value="Jeremias">Jeremias</option>
-<option value="LAMENTACOES">Lamentações</option>
-<option value="Ezequiel">Ezequiel</option>
-<option value="Daniel">Daniel</option>
-<option value="OSEIAS">Oséias</option>
-<option value="Joel">Joel</option>
-<option value="Amos">Amós</option>
-<option value="OBADIAS">Obadias</option>
-<option value="Jonas">Jonas</option>
-<option value="Miqueias">Miquéias</option>
-<option value="Naum">Naum</option>
-<option value="habacuque">Habacuque</option>
-<option value="Sofonias">Sofonias</option>
-<option value="Ageu">Ageu</option>
-<option value="Zacarias">Zacarias</option>
-<option value="malaquias">Malaquias</option>
-<option value="Mateus">Mateus</option>
-<option value="Marcos">Marcos</option>
-<option value="Lucas">Lucas</option>
-<option value="Joao">João</option>
-<option value="Atos">Atos</option>
-<option value="Romanos">Romanos</option>
-<option value="lCorintios">1º Coríntios</option>
-<option value="llCorintios">2º Coríntios</option>
-<option value="Galatas">Gálatas</option>
-<option value="Efesios">Efésios</option>
-<option value="Filipenses">Filipenses</option>
-<option value="Colossenses">Colossenses</option>
-<option value="lTessalonicenses">1º Tessalonicenses</option>
-<option value="llTessalonicenses">2º Tessalonicenses</option>
-<option value="lTimoteo">1º Timóteo</option>
-<option value="llTimoteo">2º Timóteo</option>
-<option value="Tito">Tito</option>
-<option value="Filemom">Filemom</option>
-<option value="Hebreus">Hebreus</option>
-<option value="Tiago">Tiago</option>
-<option value="lPedro">1º Pedro</option>
-<option value="llPedro">2º Pedro</option>
-<option value="lJoao">1º João</option>
-<option value="llJoao">2º João</option>
-<option value="lllJoao">3º João</option>
-<option value="Judas">Judas</option>
-<option value="Apocalipse">Apocalipse</option>
-    </select>
 
  <script>   
         const audios = {
