@@ -127,7 +127,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // Chamada à API OSB
-                const response = await fetch('/api/afri.json');
+                const response = await fetch('/afri.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
