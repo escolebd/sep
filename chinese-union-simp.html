@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NNN24HJD');</script>
+<!-- End Google Tag Manager -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.septuaginta.com.br/"
+  },
+  "headline": "圣经和合本简体",
+  "image": [
+    "https://www.septuaginta.com.br/app/imagens/512x512.png"
+  ],
+  "datePublished": "2025-08-20T20:15:00+08:00",
+  "dateModified": "2025-08-20T20:15:00+08:00",
+  "author": {
+    "@type": "Person",
+    "name": "Septuaginta",
+    "url": "https://www.septuaginta.com.br/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Septuaginta",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.septuaginta.com.br/app/imagens/512x512.png"
+    }
+  },
+  "description": "圣经和合本简体: 圣经和合本简体是最广泛使用的中文译本，语言简明易懂，适合中国大陆信徒阅读与研读。"
+}
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣经和合本简体 - Bíblia chines</title>
+<link rel="manifest" href="/app/manifest.json">
+<meta name="theme-color" content="#000000">
+<meta property="og:image" content="https://www.septuaginta.com.br/app/imagens/512x512.png">
+<link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
+<meta name="description" content="圣经和合本简体: 圣经和合本简体是最广泛使用的中文译本，语言简明易懂，适合中国大陆信徒阅读与研读。">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 圣经和合本简体</h1>
+            <p>探索圣经经文</p>
+            <footer style="margin-top: 50px; text-align: center;">
+  <p>在网站上搜索:</p>
+  <form action="https://www.google.com/search" method="get" class="search-form">
+    <input type="text" name="q" placeholder="在此搜索..." required
+           style="padding: 8px; width: 250px; max-width: 90%; border: 1px solid #ccc; border-radius: 5px;">
+    <input type="hidden" name="sitesearch" value="septuaginta.com.br">
+    <button type="submit"
+            style="padding: 8px 12px; margin-left: 5px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      🔍 搜索
+    </button>
+  </form>
+</footer>
+        </div>
+</div>
+<nav class="navbar">
+    <ul class="nav-list">
+        <li><a href="/">🏠 首页</a></li>
+        <li><a href="/contato.html">联系我们</a></li>
+        <li><a href="/termos-de-uso.html">使用条款</a></li>
+        <li><a href="/politica-de-privacidade.html">隐私政策</a></li>
+        <li><a href="/sobre.html">关于我们</a></li>
+        <li><a href="/">📖 其他版本</a></li>
+    </ul>
+</nav>
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="输入搜索内容..." />
+                <button id="searchBtn" class="search-btn">🔍 搜索</button>
+            </div>
+
+            <div class="book-selector">
+                <select id="bookSelect" class="book-select">
+                    <option value=""> 选择书卷...</option>
+                </select>
+                <select id="chapterSelect" class="chapter-select">
+                    <option value="">选择章节...</option>
+                </select>
+                <button id="loadChapterBtn" class="search-btn">加载章节</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="chapterTitle" class="chapter-title"></div>
+            <div id="contentArea"></div>
+        </div>
+    </div>
+
+    <script>
+        let bibleData = [];
+        let currentSearchResults = [];
+        let organizedData = {}; // To organize data by book and chapter
+
+        // Load Bible from API
+        async function loadBible() {
+            try {
+                showLoading();
+                
+                // OSB API call
+                const response = await fetch('/chinese_union_simp.json');
+                const data = await response.json();
+                
+                if (data && data.verses) {
+                    bibleData = data.verses.map(verse => ({
+                        book_name: verse.book_name,
+                        chapter: verse.chapter,
+                        verse: verse.verse,
+                        text: verse.text
+                    }));
+                    
+                    organizeData();
+                    populateBookSelector();
+                    loadInitialContent();
+                } else {
+                    throw new Error('API返回的数据格式无效');
+                }
+            } catch (error) {
+                console.error('加载圣经时出错:', error);
+                showError();
+            }
+        }
+
+        // Organize data by book and chapter for easier navigation
+        function organizeData() {
+            organizedData = {};
+            
+            bibleData.forEach(verse => {
+                const bookName = verse.book_name;
+                const chapter = verse.chapter;
+                const verseNumber = verse.verse;
+                
+                if (!organizedData[bookName]) {
+                    organizedData[bookName] = {};
+                }
+                
+                if (!organizedData[bookName][chapter]) {
+                    organizedData[bookName][chapter] = [];
+                }
+                
+                organizedData[bookName][chapter].push({
+                    verse: verseNumber,
+                    text: verse.text
+                });
+            });
+            
+            // Sort verses within each chapter
+            Object.keys(organizedData).forEach(book => {
+                Object.keys(organizedData[book]).forEach(chapter => {
+                    organizedData[book][chapter].sort((a, b) => a.verse - b.verse);
+                });
+            });
+        }
+
+        // Load initial content (first book, first chapter)
+        async function loadInitialContent() {
+            const firstBook = Object.keys(organizedData)[0];
+            if (firstBook) {
+                const firstChapter = Object.keys(organizedData[firstBook])[0];
+                if (firstChapter) {
+                    displayChapter(firstBook, parseInt(firstChapter));
+                }
+            }
+        }
+
+        // Populate book selector
+        function populateBookSelector() {
+            const bookSelect = document.getElementById('bookSelect');
+            bookSelect.innerHTML = '<option value="">选择书卷...</option>';
+            
+            Object.keys(organizedData).forEach(bookName => {
+                const option = document.createElement('option');
+                option.value = bookName;
+                option.textContent = bookName;
+                bookSelect.appendChild(option);
+            });
+        }
+
+        // Populate chapter selector
+        function populateChapterSelector(bookName) {
+            const chapterSelect = document.getElementById('chapterSelect');
+            chapterSelect.innerHTML = '<option value="">选择章节...</option>';
+            
+            if (bookName && organizedData[bookName]) {
+                const chapters = Object.keys(organizedData[bookName]).sort((a, b) => parseInt(a) - parseInt(b));
+                chapters.forEach(chapter => {
+                    const option = document.createElement('option');
+                    option.value = chapter;
+                    option.textContent = `第 ${chapter} 章`;
+                    chapterSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Display a chapter
+        function displayChapter(bookName, chapterNumber) {
+            const chapterTitle = document.getElementById('chapterTitle');
+            const contentArea = document.getElementById('contentArea');
+            
+            chapterTitle.textContent = `${bookName} - 第 ${chapterNumber} 章`;
+            
+            if (organizedData[bookName] && organizedData[bookName][chapterNumber]) {
+                let html = '';
+                const verses = organizedData[bookName][chapterNumber];
+                
+                verses.forEach(verseObj => {
+                    html += `
+                        <div class="verse">
+                            <span class="verse-number">${verseObj.verse}</span>
+                            <span class="verse-text">${verseObj.text}</span>
+                        </div>
+                    `;
+                });
+                
+                contentArea.innerHTML = html;
+            } else {
+                contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">未找到章节。</p>';
+            }
+        }
+
+        // Perform search
+        function performSearch(searchTerm) {
+            if (!searchTerm.trim()) {
+                alert('请输入搜索词');
+                return;
+            }
+
+            showLoading('搜索中...');
+            currentSearchResults = [];
+            
+            const searchTermLower = searchTerm.toLowerCase();
+            
+            // Search directly in the original data
+            bibleData.forEach(verse => {
+                if (verse.text.toLowerCase().includes(searchTermLower)) {
+                    currentSearchResults.push({
+                        book: verse.book_name,
+                        chapter: verse.chapter,
+                        verse: verse.verse,
+                        text: verse.text,
+                        searchTerm: searchTerm
+                    });
+                }
+            });
+            
+            displaySearchResults();
+        }
+
+        // Display search results
+        function displaySearchResults() {
+            const chapterTitle = document.getElementById('chapterTitle');
+            const contentArea = document.getElementById('contentArea');
+            
+            if (currentSearchResults.length === 0) {
+                chapterTitle.textContent = '未找到结果';
+                contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">请尝试不同的搜索词。</p>';
+                return;
+            }
+            
+            chapterTitle.textContent = `搜索结果 (找到 ${currentSearchResults.length} 条)`;
+            
+            let html = '';
+            currentSearchResults.forEach((result) => {
+                const highlightedText = highlightSearchTerm(result.text, result.searchTerm);
+                html += `
+                    <div class="search-result-item">
+                        <div class="result-reference">${result.book} ${result.chapter}:${result.verse}</div>
+                        <div class="result-text">${highlightedText}</div>
+                    </div>
+                `;
+            });
+            
+            contentArea.innerHTML = html;
+        }
+
+        // Highlight search term
+        function highlightSearchTerm(text, searchTerm) {
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Show loading indicator
+        function showLoading(message = '加载中...') {
+            document.getElementById('contentArea').innerHTML = 
+                `<div class="loading">⏳ ${message}</div>`;
+        }
+
+        // Show error message
+        function showError() {
+            document.getElementById('contentArea').innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <h2 style="color: #e74c3c;">加载圣经时出错</h2>
+                    <p style="color: #7f8c8d;">无法从API加载数据。</p>
+                    <button onclick="location.reload()" class="search-btn" style="margin-top: 15px;">重试</button>
+                </div>
+            `;
+        }
+
+        // Event Listeners
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const searchTerm = document.getElementById('searchInput').value;
+            performSearch(searchTerm);
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = document.getElementById('searchInput').value;
+                performSearch(searchTerm);
+            }
+        });
+
+        document.getElementById('bookSelect').addEventListener('change', (e) => {
+            const bookName = e.target.value;
+            if (bookName !== '') {
+                populateChapterSelector(bookName);
+            }
+        });
+
+        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+            const bookName = document.getElementById('bookSelect').value;
+            const chapterNumber = document.getElementById('chapterSelect').value;
+            
+            if (bookName !== '' && chapterNumber !== '') {
+                displayChapter(bookName, parseInt(chapterNumber));
+            } else {
+                alert('请选择书卷和章节');
+            }
+        });
+
+        // Load Bible when page starts
+        window.addEventListener('load', loadBible);
+    </script>
+    <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
+    <nav class="navbar">
+    <ul class="nav-list">
+        <li><a href="/">🏠 首页</a></li>
+        <li><a href="/contato.html">联系我们</a></li>
+        <li><a href="/termos-de-uso.html">使用条款</a></li>
+        <li><a href="/politica-de-privacidade.html">隐私政策</a></li>
+        <li><a href="/sobre.html">关于我们</a></li>
+    </ul>
+</nav>
+    <p>&copy; 圣经搜索系统 | 由 <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a> 开发</p>
+    <p>保留所有权利。</p>
+</footer>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NNN24HJD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script src="/app/script.js"></script>
+<script>
+// Block Ctrl + U
+document.addEventListener("keydown", function(e) {
+    if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        alert("已禁用查看源代码功能。");
+    }
+});
+</script>
+</body>
+</html>
