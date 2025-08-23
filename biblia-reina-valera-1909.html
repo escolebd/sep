@@ -92,7 +92,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <select id="chapterSelect" class="chapter-select">
                     <option value="">Selecciona un capítulo...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">Cargar capítulo</button>
             </div>
         </div>
 
@@ -113,7 +112,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // Llamada a la API OSB
-                const response = await fetch('/rv_1909.json');
+                const response = await fetch('/ateste.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
@@ -171,9 +170,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         async function loadInitialContent() {
             const firstBook = Object.keys(organizedData)[0];
             if (firstBook) {
+                const bookSelect = document.getElementById('bookSelect');
+                bookSelect.value = firstBook;
+                
                 const firstChapter = Object.keys(organizedData[firstBook])[0];
                 if (firstChapter) {
-                    displayChapter(firstBook, parseInt(firstChapter));
+                    populateChapterSelector(firstBook);
+                    // Pequeno delay para garantir que o chapterSelect foi preenchido
+                    setTimeout(function() {
+                        const chapterSelect = document.getElementById('chapterSelect');
+                        chapterSelect.value = firstChapter;
+                        displayChapter(firstBook, parseInt(firstChapter));
+                    }, 50);
                 }
             }
         }
@@ -204,6 +212,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `Capítulo ${chapter}`;
                     chapterSelect.appendChild(option);
                 });
+                
+                // Seleciona automaticamente o primeiro capítulo
+                if (chapters.length > 0) {
+                    chapterSelect.value = chapters[0];
+                }
             }
         }
 
@@ -324,26 +337,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         });
 
-        document.getElementById('bookSelect').addEventListener('change', (e) => {
+        document.getElementById('bookSelect').addEventListener('change', function(e) {
             const bookName = e.target.value;
-            if (bookName !== '') {
+            if (bookName) {
                 populateChapterSelector(bookName);
+                
+                // Aguarda un momento para garantir que o chapterSelect foi preenchido
+                setTimeout(function() {
+                    const chapterSelect = document.getElementById('chapterSelect');
+                    if (chapterSelect.options.length > 1) {
+                        const firstChapter = chapterSelect.options[1].value;
+                        displayChapter(bookName, parseInt(firstChapter));
+                    }
+                }, 50);
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+        document.getElementById('chapterSelect').addEventListener('change', function(e) {
             const bookName = document.getElementById('bookSelect').value;
-            const chapterNumber = document.getElementById('chapterSelect').value;
+            const chapterNumber = e.target.value;
             
-            if (bookName !== '' && chapterNumber !== '') {
+            if (bookName && chapterNumber) {
                 displayChapter(bookName, parseInt(chapterNumber));
-            } else {
-                alert('Por favor selecciona un libro y un capítulo');
             }
         });
 
         // Cargar Biblia cuando la página inicia
-        window.addEventListener('load', loadBible);
+        window.addEventListener('load', function() {
+            loadBible();
+        });
     </script>
     <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
     <nav class="navbar">
