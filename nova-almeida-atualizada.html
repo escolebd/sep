@@ -39,20 +39,225 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   "description": "Bíblia Nova Almeida Atualizada: linguagem moderna, fluente e fiel aos originais, ideal para leitura, estudo e uso litúrgico."
 }
 </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Almeida Atualizada</title>
+    <title>Bíblia Nova Almeida Atualizada</title>
 <link rel="manifest" href="/app/manifest.json">
 <meta name="theme-color" content="#000000">
 <meta property="og:image" content="https://www.septuaginta.com.br/app/imagens/512x512.png">
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="Bíblia Nova Almeida Atualizada: linguagem moderna, fluente e fiel aos originais, ideal para leitura, estudo e uso litúrgico.">
-<link rel="stylesheet" href="styles.css">
+
+<style>
+    /* Estilos básicos */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        color: white;
+        padding: 30px 20px;
+        border-radius: 10px;
+    }
+    
+    .header h1 {
+        color: white;
+        margin-bottom: 10px;
+        font-size: 2.5rem;
+    }
+    
+    .header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2rem;
+    }
+    
+    .navbar {
+        background: linear-gradient(45deg, #2c3e50, #3498db);
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .nav-list {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 15px;
+        flex-wrap: wrap;
+    }
+    
+    .nav-list li {
+        margin: 0 15px;
+    }
+    
+    .nav-list a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.3s;
+    }
+    
+    .nav-list a:hover {
+        opacity: 0.8;
+    }
+    
+    .search-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+    
+    .search-box {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    
+    .search-input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px 0 0 5px;
+        font-size: 16px;
+    }
+    
+    .search-btn {
+        padding: 12px 20px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    
+    .search-btn:hover {
+        background-color: #2980b9;
+    }
+    
+    .book-selector {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .book-select, .chapter-select {
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        flex: 1;
+        min-width: 150px;
+    }
+    
+    .content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .chapter-title {
+        font-size: 24px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #eee;
+    }
+    
+    .verse {
+        margin-bottom: 15px;
+        padding-left: 10px;
+        border-left: 3px solid transparent;
+        transition: border-left-color 0.3s;
+    }
+    
+    .verse:hover {
+        border-left-color: #3498db;
+    }
+    
+    .verse-number {
+        font-weight: bold;
+        color: #3498db;
+        margin-right: 8px;
+    }
+    
+    .loading {
+        text-align: center;
+        padding: 40px;
+        font-size: 18px;
+        color: #7f8c8d;
+    }
+    
+    .search-result-item {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .result-reference {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+    
+    .result-text {
+        color: #333;
+    }
+    
+    .highlight {
+        background-color: yellow;
+        font-weight: bold;
+    }
+    
+    @media (max-width: 768px) {
+        .search-box, .book-selector {
+            flex-direction: column;
+        }
+        
+        .search-input, .search-btn, .book-select, .chapter-select {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        .header p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<meta name="google-site-verification" content="_BtnsqwRzINSsO9ssJ4f5zAelQtxVe1rsLCy9cxOmDw" />
+<meta name="msvalidate.01" content="7F39B7B30C568008CE65B3CDA94E6F47" />
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📖 Nova Almeida Atualizada</h1>
+            <h1>📖 Bíblia Nova Almeida Atualizada</h1>
             <p>Explore as Escrituras Sagradas</p>
 <footer style="margin-top: 50px; text-align: center;">
   <p>Pesquisar no site:</p>
@@ -78,7 +283,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </ul>
 </nav>
 <nav style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0;">
-  <a href="/almeida-corrigida-e-fiel.html">📖 ACF</a>
   <a href="/jeremias-ferreira-alves-almeida.html">📖 JFAA</a>
   <a href="/traducao-brasileira.html">📖 TB</a>
   <a href="/nova-versao-transformadora.html">📖 NVT</a>
@@ -86,6 +290,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <a href="/nova-biblia-viva.html">📖 NBV</a>
   <a href="/king-james-fiel.html">📖 KJF</a>
   <a href="/king-james-atualizada.html">📖 KJA</a>
+  <a href="/nova-almeida-atualizada.html">📖 NAA</a>
   <a href="/almeida-seculo-xxi.html">📖 AS21</a>
   <a href="/almeida-revista-e-corrigida.html">📖 ARC</a>
   <a href="/almeida-revista-e-atualizada.html">📖 ARA</a>
@@ -105,7 +310,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <select id="chapterSelect" class="chapter-select">
                     <option value="">Selecione um capítulo...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">Carregar Capítulo</button>
             </div>
         </div>
 
@@ -154,8 +358,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     bibleData = data;
                     populateBookSelector();
                     
-                    // Carrega apenas Gênesis inicialmente
-                    await loadInitialContent();
+                    // Seleciona automaticamente Gênesis e carrega o capítulo 1
+                    selectInitialBook();
                 }
             } catch (error) {
                 console.error('Erro ao carregar a Bíblia:', error);
@@ -163,13 +367,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
-        // Carrega o conteúdo inicial (Gênesis 1)
-        async function loadInitialContent() {
+        // Seleciona automaticamente o livro inicial (Gênesis)
+        function selectInitialBook() {
             const genesisIndex = bibleData.findIndex(book => book.abbrev === 'Gn');
             if (genesisIndex !== -1) {
-                loadedBooks.add(genesisIndex); // Marca como carregado
-                const genesisBook = bibleData[genesisIndex];
-                displayChapter(genesisBook, 0, 'Gênesis');
+                // Define o valor do seletor de livros
+                document.getElementById('bookSelect').value = genesisIndex;
+                
+                // Popula o seletor de capítulos
+                populateChapterSelector(genesisIndex);
+                
+                // Seleciona automaticamente o primeiro capítulo
+                document.getElementById('chapterSelect').value = 0;
+                
+                // Carrega o capítulo
+                loadSelectedChapter();
             }
         }
 
@@ -220,6 +432,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `Capítulo ${i + 1}`;
                     chapterSelect.appendChild(option);
                 }
+            }
+        }
+
+        // Carrega o capítulo selecionado
+        function loadSelectedChapter() {
+            const bookIndex = document.getElementById('bookSelect').value;
+            const chapterIndex = document.getElementById('chapterSelect').value;
+            
+            if (bookIndex !== '' && chapterIndex !== '') {
+                const book = bibleData[bookIndex];
+                const bookName = getFullBookName(book.abbrev);
+                displayChapter(book, parseInt(chapterIndex), bookName);
             }
         }
 
@@ -346,32 +570,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             if (bookIndex !== '') {
                 loadedBooks.add(parseInt(bookIndex)); // Marca como carregado
                 populateChapterSelector(bookIndex);
+                
+                // Seleciona automaticamente o primeiro capítulo
+                document.getElementById('chapterSelect').value = 0;
+                
+                // Carrega o capítulo automaticamente
+                loadSelectedChapter();
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
-            const bookIndex = document.getElementById('bookSelect').value;
-            const chapterIndex = document.getElementById('chapterSelect').value;
-            
-            if (bookIndex !== '' && chapterIndex !== '') {
-                const book = bibleData[bookIndex];
-                const bookName = getFullBookName(book.abbrev);
-                displayChapter(book, parseInt(chapterIndex), bookName);
-            } else {
-                alert('Selecione um livro e um capítulo');
-            }
+        document.getElementById('chapterSelect').addEventListener('change', () => {
+            // Carrega o capítulo automaticamente quando o usuário seleciona um capítulo
+            loadSelectedChapter();
         });
 
         // Carrega a Bíblia ao iniciar a página
         window.addEventListener('load', loadBible);
-function copyShareLink() {
-    const url = "https://www.septuaginta.com.br";
-    navigator.clipboard.writeText(url).then(() => {
-        alert("Link copiado para a área de transferência!");
-    }).catch(() => {
-        alert("Não foi possível copiar o link.");
-    });
-}
+        
+        function copyShareLink() {
+            const url = "https://www.septuaginta.com.br";
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Link copiado para a área de transferência!");
+            }).catch(() => {
+                alert("Não foi possível copiar o link.");
+            });
+        }
     </script>
 
 <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
