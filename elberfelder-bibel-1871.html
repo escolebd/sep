@@ -48,15 +48,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="Elberfelder Bibel (1871): Eine wortgetreue deutsche Übersetzung mit erklärenden Fußnoten zu Hebräisch und Griechisch.">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://septuaginta.com.br/styles.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📖 Elberfelder Bibel (1871)</h1>
-            <p>Erkunden Sie die Heilige Schrift</p>
+            <p>Erkunde die Heilige Schrift</p>
             <footer style="margin-top: 50px; text-align: center;">
-  <p>Auf der Website suchen:</p>
+  <p>Suche auf der Webseite:</p>
   <form action="https://www.google.com/search" method="get" class="search-form">
     <input type="text" name="q" placeholder="Hier suchen..." required
            style="padding: 8px; width: 250px; max-width: 90%; border: 1px solid #ccc; border-radius: 5px;">
@@ -81,18 +81,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </nav>
         <div class="search-container">
             <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder="Geben Sie hier Ihre Suche ein..." />
+                <input type="text" id="searchInput" class="search-input" placeholder="Gib deine Suche hier ein..." />
                 <button id="searchBtn" class="search-btn">🔍 Suchen</button>
             </div>
 
             <div class="book-selector">
                 <select id="bookSelect" class="book-select">
-                    <option value=""> Buch auswählen...</option>
+                    <option value=""> Wähle ein Buch...</option>
                 </select>
                 <select id="chapterSelect" class="chapter-select">
-                    <option value="">Kapitel auswählen...</option>
+                    <option value="">Wähle ein Kapitel...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">Kapitel laden</button>
             </div>
         </div>
 
@@ -113,7 +112,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // OSB API call
-                const response = await fetch('/elberfelder_1871.json');
+                const response = await fetch('https://septuaginta.com.br/elberfelder_1871.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
@@ -173,6 +172,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             if (firstBook) {
                 const firstChapter = Object.keys(organizedData[firstBook])[0];
                 if (firstChapter) {
+                    // Set the book and chapter selectors
+                    document.getElementById('bookSelect').value = firstBook;
+                    populateChapterSelector(firstBook);
+                    document.getElementById('chapterSelect').value = firstChapter;
+                    
+                    // Display the chapter
                     displayChapter(firstBook, parseInt(firstChapter));
                 }
             }
@@ -181,7 +186,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Populate book selector
         function populateBookSelector() {
             const bookSelect = document.getElementById('bookSelect');
-            bookSelect.innerHTML = '<option value="">Buch auswählen...</option>';
+            bookSelect.innerHTML = '<option value="">Wähle ein Buch...</option>';
             
             Object.keys(organizedData).forEach(bookName => {
                 const option = document.createElement('option');
@@ -194,7 +199,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Populate chapter selector
         function populateChapterSelector(bookName) {
             const chapterSelect = document.getElementById('chapterSelect');
-            chapterSelect.innerHTML = '<option value="">Kapitel auswählen...</option>';
+            chapterSelect.innerHTML = '<option value="">Wähle ein Kapitel...</option>';
             
             if (bookName && organizedData[bookName]) {
                 const chapters = Object.keys(organizedData[bookName]).sort((a, b) => parseInt(a) - parseInt(b));
@@ -204,6 +209,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `Kapitel ${chapter}`;
                     chapterSelect.appendChild(option);
                 });
+                
+                // Automatically select the first chapter
+                if (chapters.length > 0) {
+                    chapterSelect.value = chapters[0];
+                    displayChapter(bookName, parseInt(chapters[0]));
+                }
             }
         }
 
@@ -236,7 +247,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Perform search
         function performSearch(searchTerm) {
             if (!searchTerm.trim()) {
-                alert('Bitte geben Sie einen Suchbegriff ein');
+                alert('Bitte gib einen Suchbegriff ein');
                 return;
             }
 
@@ -268,7 +279,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             if (currentSearchResults.length === 0) {
                 chapterTitle.textContent = 'Keine Ergebnisse gefunden';
-                contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">Versuchen Sie andere Suchbegriffe.</p>';
+                contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">Versuche es mit anderen Suchbegriffen.</p>';
                 return;
             }
             
@@ -328,17 +339,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const bookName = e.target.value;
             if (bookName !== '') {
                 populateChapterSelector(bookName);
+            } else {
+                document.getElementById('chapterSelect').innerHTML = '<option value="">Wähle ein Kapitel...</option>';
+                document.getElementById('chapterTitle').textContent = '';
+                document.getElementById('contentArea').innerHTML = '';
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+        document.getElementById('chapterSelect').addEventListener('change', (e) => {
             const bookName = document.getElementById('bookSelect').value;
-            const chapterNumber = document.getElementById('chapterSelect').value;
+            const chapterNumber = e.target.value;
             
             if (bookName !== '' && chapterNumber !== '') {
                 displayChapter(bookName, parseInt(chapterNumber));
-            } else {
-                alert('Bitte wählen Sie ein Buch und ein Kapitel aus');
             }
         });
 
@@ -368,7 +381,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 document.addEventListener("keydown", function(e) {
     if (e.ctrlKey && e.key.toLowerCase() === 'u') {
         e.preventDefault();
-        alert("Quellcode-Ansicht deaktiviert.");
+        alert("Quelltextanzeige deaktiviert.");
     }
 });
 </script>

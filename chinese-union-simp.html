@@ -41,14 +41,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>圣经和合本简体 - Bíblia chines</title>
+    <title>圣经和合本简体</title>
 <link rel="manifest" href="/app/manifest.json">
 <meta name="theme-color" content="#000000">
 <meta property="og:image" content="https://www.septuaginta.com.br/app/imagens/512x512.png">
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="圣经和合本简体: 圣经和合本简体是最广泛使用的中文译本，语言简明易懂，适合中国大陆信徒阅读与研读。">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://septuaginta.com.br/styles.css">
 </head>
 <body>
     <div class="container">
@@ -76,12 +76,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <li><a href="/termos-de-uso.html">使用条款</a></li>
         <li><a href="/politica-de-privacidade.html">隐私政策</a></li>
         <li><a href="/sobre.html">关于我们</a></li>
-        <li><a href="/">📖 其他版本</a></li>
+        <li><a href="/">📖 其他</a></li>
     </ul>
 </nav>
         <div class="search-container">
             <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder="输入搜索内容..." />
+                <input type="text" id="searchInput" class="search-input" placeholder="在此输入搜索内容..." />
                 <button id="searchBtn" class="search-btn">🔍 搜索</button>
             </div>
 
@@ -92,7 +92,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <select id="chapterSelect" class="chapter-select">
                     <option value="">选择章节...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">加载章节</button>
             </div>
         </div>
 
@@ -113,7 +112,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // OSB API call
-                const response = await fetch('/chinese_union_simp.json');
+                const response = await fetch('https://septuaginta.com.br/chinese_union_simp.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
@@ -128,10 +127,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     populateBookSelector();
                     loadInitialContent();
                 } else {
-                    throw new Error('API返回的数据格式无效');
+                    throw new Error('Invalid data format from API');
                 }
             } catch (error) {
-                console.error('加载圣经时出错:', error);
+                console.error('Error loading the Bible:', error);
                 showError();
             }
         }
@@ -173,6 +172,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             if (firstBook) {
                 const firstChapter = Object.keys(organizedData[firstBook])[0];
                 if (firstChapter) {
+                    // Set the book and chapter selectors
+                    document.getElementById('bookSelect').value = firstBook;
+                    populateChapterSelector(firstBook);
+                    document.getElementById('chapterSelect').value = firstChapter;
+                    
+                    // Display the chapter
                     displayChapter(firstBook, parseInt(firstChapter));
                 }
             }
@@ -204,6 +209,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `第 ${chapter} 章`;
                     chapterSelect.appendChild(option);
                 });
+                
+                // Automatically select the first chapter
+                if (chapters.length > 0) {
+                    chapterSelect.value = chapters[0];
+                    displayChapter(bookName, parseInt(chapters[0]));
+                }
             }
         }
 
@@ -328,17 +339,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const bookName = e.target.value;
             if (bookName !== '') {
                 populateChapterSelector(bookName);
+            } else {
+                document.getElementById('chapterSelect').innerHTML = '<option value="">选择章节...</option>';
+                document.getElementById('chapterTitle').textContent = '';
+                document.getElementById('contentArea').innerHTML = '';
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+        document.getElementById('chapterSelect').addEventListener('change', (e) => {
             const bookName = document.getElementById('bookSelect').value;
-            const chapterNumber = document.getElementById('chapterSelect').value;
+            const chapterNumber = e.target.value;
             
             if (bookName !== '' && chapterNumber !== '') {
                 displayChapter(bookName, parseInt(chapterNumber));
-            } else {
-                alert('请选择书卷和章节');
             }
         });
 
@@ -356,7 +369,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </ul>
 </nav>
     <p>&copy; 圣经搜索系统 | 由 <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a> 开发</p>
-    <p>保留所有权利。</p>
+    <p>版权所有。</p>
 </footer>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NNN24HJD"

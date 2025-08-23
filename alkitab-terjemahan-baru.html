@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="Alkitab Terjemahan Baru adalah terjemahan resmi dalam bahasa Indonesia, dipakai luas di gereja-gereja sejak 1974 hingga kini.">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://septuaginta.com.br/styles.css">
 </head>
 <body>
     <div class="container">
@@ -87,12 +87,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
             <div class="book-selector">
                 <select id="bookSelect" class="book-select">
-                    <option value=""> Pilih kitab...</option>
+                    <option value=""> Pilih sebuah kitab...</option>
                 </select>
                 <select id="chapterSelect" class="chapter-select">
-                    <option value="">Pilih pasal...</option>
+                    <option value="">Pilih sebuah pasal...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">Muat pasal</button>
             </div>
         </div>
 
@@ -105,15 +104,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script>
         let bibleData = [];
         let currentSearchResults = [];
-        let organizedData = {}; // To organize data by book and chapter
+        let organizedData = {}; // Untuk mengatur data berdasarkan kitab dan pasal
 
-        // Load Bible from API
+        // Muat Alkitab dari API
         async function loadBible() {
             try {
                 showLoading();
                 
-                // OSB API call
-                const response = await fetch('/indo_tb.json');
+                // Panggilan API OSB
+                const response = await fetch('https://septuaginta.com.br/indo_tb.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
@@ -128,15 +127,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     populateBookSelector();
                     loadInitialContent();
                 } else {
-                    throw new Error('Invalid data format from API');
+                    throw new Error('Format data dari API tidak valid');
                 }
             } catch (error) {
-                console.error('Error loading the Bible:', error);
+                console.error('Kesalahan memuat Alkitab:', error);
                 showError();
             }
         }
 
-        // Organize data by book and chapter for easier navigation
+        // Atur data berdasarkan kitab dan pasal untuk navigasi yang lebih mudah
         function organizeData() {
             organizedData = {};
             
@@ -159,7 +158,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 });
             });
             
-            // Sort verses within each chapter
+            // Urutkan ayat dalam setiap pasal
             Object.keys(organizedData).forEach(book => {
                 Object.keys(organizedData[book]).forEach(chapter => {
                     organizedData[book][chapter].sort((a, b) => a.verse - b.verse);
@@ -167,21 +166,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Load initial content (first book, first chapter)
+        // Muat konten awal (kitab pertama, pasal pertama)
         async function loadInitialContent() {
             const firstBook = Object.keys(organizedData)[0];
             if (firstBook) {
                 const firstChapter = Object.keys(organizedData[firstBook])[0];
                 if (firstChapter) {
+                    // Atur pemilih kitab dan pasal
+                    document.getElementById('bookSelect').value = firstBook;
+                    populateChapterSelector(firstBook);
+                    document.getElementById('chapterSelect').value = firstChapter;
+                    
+                    // Tampilkan pasal
                     displayChapter(firstBook, parseInt(firstChapter));
                 }
             }
         }
 
-        // Populate book selector
+        // Isi pemilih kitab
         function populateBookSelector() {
             const bookSelect = document.getElementById('bookSelect');
-            bookSelect.innerHTML = '<option value="">Pilih kitab...</option>';
+            bookSelect.innerHTML = '<option value="">Pilih sebuah kitab...</option>';
             
             Object.keys(organizedData).forEach(bookName => {
                 const option = document.createElement('option');
@@ -191,10 +196,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Populate chapter selector
+        // Isi pemilih pasal
         function populateChapterSelector(bookName) {
             const chapterSelect = document.getElementById('chapterSelect');
-            chapterSelect.innerHTML = '<option value="">Pilih pasal...</option>';
+            chapterSelect.innerHTML = '<option value="">Pilih sebuah pasal...</option>';
             
             if (bookName && organizedData[bookName]) {
                 const chapters = Object.keys(organizedData[bookName]).sort((a, b) => parseInt(a) - parseInt(b));
@@ -204,10 +209,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `Pasal ${chapter}`;
                     chapterSelect.appendChild(option);
                 });
+                
+                // Otomatis pilih pasal pertama
+                if (chapters.length > 0) {
+                    chapterSelect.value = chapters[0];
+                    displayChapter(bookName, parseInt(chapters[0]));
+                }
             }
         }
 
-        // Display a chapter
+        // Tampilkan sebuah pasal
         function displayChapter(bookName, chapterNumber) {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
@@ -233,10 +244,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
-        // Perform search
+        // Lakukan pencarian
         function performSearch(searchTerm) {
             if (!searchTerm.trim()) {
-                alert('Silakan masukkan kata kunci pencarian');
+                alert('Harap masukkan kata kunci pencarian');
                 return;
             }
 
@@ -245,7 +256,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             const searchTermLower = searchTerm.toLowerCase();
             
-            // Search directly in the original data
+            // Cari langsung di data asli
             bibleData.forEach(verse => {
                 if (verse.text.toLowerCase().includes(searchTermLower)) {
                     currentSearchResults.push({
@@ -261,7 +272,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             displaySearchResults();
         }
 
-        // Display search results
+        // Tampilkan hasil pencarian
         function displaySearchResults() {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
@@ -288,19 +299,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             contentArea.innerHTML = html;
         }
 
-        // Highlight search term
+        // Sorot kata kunci pencarian
         function highlightSearchTerm(text, searchTerm) {
             const regex = new RegExp(`(${searchTerm})`, 'gi');
             return text.replace(regex, '<span class="highlight">$1</span>');
         }
 
-        // Show loading indicator
+        // Tampilkan indikator loading
         function showLoading(message = 'Memuat...') {
             document.getElementById('contentArea').innerHTML = 
                 `<div class="loading">⏳ ${message}</div>`;
         }
 
-        // Show error message
+        // Tampilkan pesan kesalahan
         function showError() {
             document.getElementById('contentArea').innerHTML = `
                 <div style="text-align: center; padding: 20px;">
@@ -311,7 +322,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             `;
         }
 
-        // Event Listeners
+        // Pendengar Acara
         document.getElementById('searchBtn').addEventListener('click', () => {
             const searchTerm = document.getElementById('searchInput').value;
             performSearch(searchTerm);
@@ -328,21 +339,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const bookName = e.target.value;
             if (bookName !== '') {
                 populateChapterSelector(bookName);
+            } else {
+                document.getElementById('chapterSelect').innerHTML = '<option value="">Pilih sebuah pasal...</option>';
+                document.getElementById('chapterTitle').textContent = '';
+                document.getElementById('contentArea').innerHTML = '';
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+        document.getElementById('chapterSelect').addEventListener('change', (e) => {
             const bookName = document.getElementById('bookSelect').value;
-            const chapterNumber = document.getElementById('chapterSelect').value;
+            const chapterNumber = e.target.value;
             
             if (bookName !== '' && chapterNumber !== '') {
                 displayChapter(bookName, parseInt(chapterNumber));
-            } else {
-                alert('Silakan pilih kitab dan pasal');
             }
         });
 
-        // Load Bible when page starts
+        // Muat Alkitab saat halaman dimulai
         window.addEventListener('load', loadBible);
     </script>
     <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
@@ -364,7 +377,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <script src="/app/script.js"></script>
 <script>
-// Block Ctrl + U
+// Blokir Ctrl + U
 document.addEventListener("keydown", function(e) {
     if (e.ctrlKey && e.key.toLowerCase() === 'u') {
         e.preventDefault();

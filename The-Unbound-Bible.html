@@ -17,7 +17,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "@type": "WebPage",
     "@id": "https://www.septuaginta.com.br/"
   },
-  "headline": "The Unbound Bible",
+  "headline": "Bibla në shqip",
   "image": [
     "https://www.septuaginta.com.br/app/imagens/512x512.png"
   ],
@@ -36,28 +36,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "url": "https://www.septuaginta.com.br/app/imagens/512x512.png"
     }
   },
-  "description": "Lexoni dhe dëgjoni Biblen Afrikane 1953 - një përkthim klasik të Fjalës së Zotit në gjuhë të pasur dhe të përjetshme."
+  "description": "Bibla në shqip, Fjala e Zotit për të gjithë, për studim, lutje dhe meditimin e përditshëm."
 }
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Unbound Bible</title>
+    <title>Bibla në shqip</title>
 <link rel="manifest" href="/app/manifest.json">
 <meta name="theme-color" content="#000000">
 <meta property="og:image" content="https://www.septuaginta.com.br/app/imagens/512x512.png">
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
-<meta name="description" content="Lexoni dhe dëgjoni Biblen Afrikane 1953 - një përkthim klasik të Fjalës së Zotit në gjuhë të pasur dhe të përjetshme.">
-<link rel="stylesheet" href="styles.css">
+<meta name="description" content="Bibla në shqip, Fjala e Zotit për të gjithë, për studim, lutje dhe meditimin e përditshëm.">
+
+    <link rel="stylesheet" href="https://septuaginta.com.br/styles.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📖 The Unbound Bible</h1>
+            <h1>📖 Bibla në shqip</h1>
             <p>Eksploro Shkrimet e Shenjta</p>
             <footer style="margin-top: 50px; text-align: center;">
-  <p>Kërkoni në faqe:</p>
+  <p>Kërko në faqen e internetit:</p>
   <form action="https://www.google.com/search" method="get" class="search-form">
-    <input type="text" name="q" placeholder="Kërkoni këtu..." required
+    <input type="text" name="q" placeholder="Kërko këtu..." required
            style="padding: 8px; width: 250px; max-width: 90%; border: 1px solid #ccc; border-radius: 5px;">
     <input type="hidden" name="sitesearch" value="septuaginta.com.br">
     <button type="submit"
@@ -70,28 +71,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </div>
 <nav class="navbar">
     <ul class="nav-list">
-        <li><a href="/">🏠 Shtëpi</a></li>
+        <li><a href="/">🏠 Kryefaqja</a></li>
         <li><a href="/contato.html">Kontakt</a></li>
         <li><a href="/termos-de-uso.html">Kushtet e Përdorimit</a></li>
         <li><a href="/politica-de-privacidade.html">Privatësia</a></li>
-        <li><a href="/sobre.html">Rreth</a></li>
-        <li><a href="/">📖 të tjerë</a></li>
+        <li><a href="/sobre.html">Rreth nesh</a></li>
+        <li><a href="/">📖 Të tjera</a></li>
     </ul>
 </nav>
         <div class="search-container">
             <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder="Shkruani kërkimin tuaj këtu..." />
+                <input type="text" id="searchInput" class="search-input" placeholder="Shkruaj kërkimin tënd këtu..." />
                 <button id="searchBtn" class="search-btn">🔍 Kërko</button>
             </div>
 
             <div class="book-selector">
                 <select id="bookSelect" class="book-select">
-                    <option value="">Zgjidh një libër...</option>
+                    <option value=""> Zgjidh një libër...</option>
                 </select>
                 <select id="chapterSelect" class="chapter-select">
                     <option value="">Zgjidh një kapitull...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">Ngarko kapitullin</button>
             </div>
         </div>
 
@@ -104,15 +104,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script>
         let bibleData = [];
         let currentSearchResults = [];
-        let organizedData = {}; // Për të organizuar të dhënat sipas librit dhe kapitullit
+        let organizedData = {}; // To organize data by book and chapter
 
-        // Ngarkon Biblen nga API
+        // Load Bible from API
         async function loadBible() {
             try {
                 showLoading();
                 
-                // Thirrje API OSB
-                const response = await fetch('/albanian.json');
+                // OSB API call
+                const response = await fetch('https://septuaginta.com.br/albanian.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
@@ -127,15 +127,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     populateBookSelector();
                     loadInitialContent();
                 } else {
-                    throw new Error('Format i pavlefshëm i të dhënave nga API');
+                    throw new Error('Invalid data format from API');
                 }
             } catch (error) {
-                console.error('Gabim gjatë ngarkimit të Biblës:', error);
+                console.error('Error loading the Bible:', error);
                 showError();
             }
         }
 
-        // Organizon të dhënat sipas librit dhe kapitullit për lehtësi lundrimi
+        // Organize data by book and chapter for easier navigation
         function organizeData() {
             organizedData = {};
             
@@ -158,7 +158,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 });
             });
             
-            // Rendit vargjet brenda çdo kapitulli
+            // Sort verses within each chapter
             Object.keys(organizedData).forEach(book => {
                 Object.keys(organizedData[book]).forEach(chapter => {
                     organizedData[book][chapter].sort((a, b) => a.verse - b.verse);
@@ -166,18 +166,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Ngarkon përmbajtjen fillestare (libri i parë, kapitulli i parë)
+        // Load initial content (first book, first chapter)
         async function loadInitialContent() {
             const firstBook = Object.keys(organizedData)[0];
             if (firstBook) {
                 const firstChapter = Object.keys(organizedData[firstBook])[0];
                 if (firstChapter) {
+                    // Set the book and chapter selectors
+                    document.getElementById('bookSelect').value = firstBook;
+                    populateChapterSelector(firstBook);
+                    document.getElementById('chapterSelect').value = firstChapter;
+                    
+                    // Display the chapter
                     displayChapter(firstBook, parseInt(firstChapter));
                 }
             }
         }
 
-        // Populon zgjedhësin e librave
+        // Populate book selector
         function populateBookSelector() {
             const bookSelect = document.getElementById('bookSelect');
             bookSelect.innerHTML = '<option value="">Zgjidh një libër...</option>';
@@ -190,7 +196,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Populon zgjedhësin e kapitullit
+        // Populate chapter selector
         function populateChapterSelector(bookName) {
             const chapterSelect = document.getElementById('chapterSelect');
             chapterSelect.innerHTML = '<option value="">Zgjidh një kapitull...</option>';
@@ -203,10 +209,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `Kapitulli ${chapter}`;
                     chapterSelect.appendChild(option);
                 });
+                
+                // Automatically select the first chapter
+                if (chapters.length > 0) {
+                    chapterSelect.value = chapters[0];
+                    displayChapter(bookName, parseInt(chapters[0]));
+                }
             }
         }
 
-        // Shfaq një kapitull
+        // Display a chapter
         function displayChapter(bookName, chapterNumber) {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
@@ -232,10 +244,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
-        // Kryen kërkim
+        // Perform search
         function performSearch(searchTerm) {
             if (!searchTerm.trim()) {
-                alert('Shkruani një term për të kërkuar');
+                alert('Ju lutem shkruani një term kërkimi');
                 return;
             }
 
@@ -244,7 +256,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             const searchTermLower = searchTerm.toLowerCase();
             
-            // Kërkon direkt në të dhënat origjinale
+            // Search directly in the original data
             bibleData.forEach(verse => {
                 if (verse.text.toLowerCase().includes(searchTermLower)) {
                     currentSearchResults.push({
@@ -260,14 +272,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             displaySearchResults();
         }
 
-        // Shfaq rezultatet e kërkimit
+        // Display search results
         function displaySearchResults() {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
             
             if (currentSearchResults.length === 0) {
-                chapterTitle.textContent = 'Nuk u gjetën rezultate';
-                contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">Provoni terma të tjerë kërkimi.</p>';
+                chapterTitle.textContent = 'Nuk u gjet asnjë rezultat';
+                contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">Provoni terma të ndryshëm kërkimi.</p>';
                 return;
             }
             
@@ -287,23 +299,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             contentArea.innerHTML = html;
         }
 
-        // Thekson termin e kërkuar
+        // Highlight search term
         function highlightSearchTerm(text, searchTerm) {
             const regex = new RegExp(`(${searchTerm})`, 'gi');
             return text.replace(regex, '<span class="highlight">$1</span>');
         }
 
-        // Shfaq treguesin e ngarkimit
-        function showLoading(message = 'Duke ngarkuar...') {
+        // Show loading indicator
+        function showLoading(message = 'Duke u ngarkuar...') {
             document.getElementById('contentArea').innerHTML = 
                 `<div class="loading">⏳ ${message}</div>`;
         }
 
-        // Shfaq mesazh gabimi
+        // Show error message
         function showError() {
             document.getElementById('contentArea').innerHTML = `
                 <div style="text-align: center; padding: 20px;">
-                    <h2 style="color: #e74c3c;">Gabim gjatë ngarkimit të Biblës</h2>
+                    <h2 style="color: #e74c3c;">Gabim në ngarkimin e Biblës</h2>
                     <p style="color: #7f8c8d;">Nuk mund të ngarkoheshin të dhënat nga API.</p>
                     <button onclick="location.reload()" class="search-btn" style="margin-top: 15px;">Provo Përsëri</button>
                 </div>
@@ -327,31 +339,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const bookName = e.target.value;
             if (bookName !== '') {
                 populateChapterSelector(bookName);
+            } else {
+                document.getElementById('chapterSelect').innerHTML = '<option value="">Zgjidh një kapitull...</option>';
+                document.getElementById('chapterTitle').textContent = '';
+                document.getElementById('contentArea').innerHTML = '';
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+        document.getElementById('chapterSelect').addEventListener('change', (e) => {
             const bookName = document.getElementById('bookSelect').value;
-            const chapterNumber = document.getElementById('chapterSelect').value;
+            const chapterNumber = e.target.value;
             
             if (bookName !== '' && chapterNumber !== '') {
                 displayChapter(bookName, parseInt(chapterNumber));
-            } else {
-                alert('Zgjidhni një libër dhe një kapitull');
             }
         });
 
-        // Ngarkon Biblen kur faqja hapet
+        // Load Bible when page starts
         window.addEventListener('load', loadBible);
     </script>
     <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
     <nav class="navbar">
     <ul class="nav-list">
-        <li><a href="/">🏠 Shtëpi</a></li>
+        <li><a href="/">🏠 Kryefaqja</a></li>
         <li><a href="/contato.html">Kontakt</a></li>
         <li><a href="/termos-de-uso.html">Kushtet e Përdorimit</a></li>
         <li><a href="/politica-de-privacidade.html">Privatësia</a></li>
-        <li><a href="/sobre.html">Rreth</a></li>
+        <li><a href="/sobre.html">Rreth nesh</a></li>
     </ul>
 </nav>
     <p>&copy; Sistemi i Kërkimit Biblik | Zhvilluar nga <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a></p>
@@ -363,7 +377,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <script src="/app/script.js"></script>
 <script>
-// Bllokon Ctrl + U
+// Block Ctrl + U
 document.addEventListener("keydown", function(e) {
     if (e.ctrlKey && e.key.toLowerCase() === 'u') {
         e.preventDefault();

@@ -41,20 +41,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bíblia Japones - 日本語の明治訳聖書</title>
+    <title>日本語の明治訳聖書</title>
 <link rel="manifest" href="/app/manifest.json">
 <meta name="theme-color" content="#000000">
 <meta property="og:image" content="https://www.septuaginta.com.br/app/imagens/512x512.png">
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="日本語の明治訳聖書は、1887年に初めて発行された日本語完全訳の聖書で、旧約と新約を文語体で含んでいます。">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://septuaginta.com.br/styles.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📖 日本語の明治訳聖書</h1>
-            <p>聖書を探索する</p>
+            <p>聖書を探求する</p>
             <footer style="margin-top: 50px; text-align: center;">
   <p>ウェブサイト内を検索:</p>
   <form action="https://www.google.com/search" method="get" class="search-form">
@@ -74,8 +74,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <li><a href="/">🏠 ホーム</a></li>
         <li><a href="/contato.html">お問い合わせ</a></li>
         <li><a href="/termos-de-uso.html">利用規約</a></li>
-        <li><a href="/politica-de-privacidade.html">プライバシーポリシー</a></li>
-        <li><a href="/sobre.html">当サイトについて</a></li>
+        <li><a href="/politica-de-privacidade.html">プライバシー</a></li>
+        <li><a href="/sobre.html">について</a></li>
         <li><a href="/">📖 その他</a></li>
     </ul>
 </nav>
@@ -87,12 +87,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
             <div class="book-selector">
                 <select id="bookSelect" class="book-select">
-                    <option value=""> 書名を選択...</option>
+                    <option value=""> 書を選択...</option>
                 </select>
                 <select id="chapterSelect" class="chapter-select">
                     <option value">章を選択...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">章を読み込む</button>
             </div>
         </div>
 
@@ -105,15 +104,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script>
         let bibleData = [];
         let currentSearchResults = [];
-        let organizedData = {}; // Para organizar os dados por livro e capítulo
+        let organizedData = {}; // To organize data by book and chapter
 
-        // Carrega a Bíblia da API
+        // Load Bible from API
         async function loadBible() {
             try {
                 showLoading();
                 
-                // Chamada à API OSB
-                const response = await fetch('/bungo.json');
+                // OSB API call
+                const response = await fetch('https://septuaginta.com.br/bungo.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
@@ -128,15 +127,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     populateBookSelector();
                     loadInitialContent();
                 } else {
-                    throw new Error('Formato de dados inválido da API');
+                    throw new Error('Invalid data format from API');
                 }
             } catch (error) {
-                console.error('聖書の読み込み中にエラーが発生しました:', error);
+                console.error('Error loading the Bible:', error);
                 showError();
             }
         }
 
-        // Organiza os dados por livro e capítulo para facilitar navegação
+        // Organize data by book and chapter for easier navigation
         function organizeData() {
             organizedData = {};
             
@@ -159,7 +158,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 });
             });
             
-            // Ordena os versículos dentro de cada capítulo
+            // Sort verses within each chapter
             Object.keys(organizedData).forEach(book => {
                 Object.keys(organizedData[book]).forEach(chapter => {
                     organizedData[book][chapter].sort((a, b) => a.verse - b.verse);
@@ -167,21 +166,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Carrega o conteúdo inicial (primeiro livro, primeiro capítulo)
+        // Load initial content (first book, first chapter)
         async function loadInitialContent() {
             const firstBook = Object.keys(organizedData)[0];
             if (firstBook) {
                 const firstChapter = Object.keys(organizedData[firstBook])[0];
                 if (firstChapter) {
+                    // Set the book and chapter selectors
+                    document.getElementById('bookSelect').value = firstBook;
+                    populateChapterSelector(firstBook);
+                    document.getElementById('chapterSelect').value = firstChapter;
+                    
+                    // Display the chapter
                     displayChapter(firstBook, parseInt(firstChapter));
                 }
             }
         }
 
-        // Popula o seletor de livros
+        // Populate book selector
         function populateBookSelector() {
             const bookSelect = document.getElementById('bookSelect');
-            bookSelect.innerHTML = '<option value="">書名を選択...</option>';
+            bookSelect.innerHTML = '<option value="">書を選択...</option>';
             
             Object.keys(organizedData).forEach(bookName => {
                 const option = document.createElement('option');
@@ -191,7 +196,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Popula o seletor de capítulos
+        // Populate chapter selector
         function populateChapterSelector(bookName) {
             const chapterSelect = document.getElementById('chapterSelect');
             chapterSelect.innerHTML = '<option value="">章を選択...</option>';
@@ -204,10 +209,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `第${chapter}章`;
                     chapterSelect.appendChild(option);
                 });
+                
+                // Automatically select the first chapter
+                if (chapters.length > 0) {
+                    chapterSelect.value = chapters[0];
+                    displayChapter(bookName, parseInt(chapters[0]));
+                }
             }
         }
 
-        // Exibe um capítulo
+        // Display a chapter
         function displayChapter(bookName, chapterNumber) {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
@@ -233,7 +244,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
-        // Realiza pesquisa
+        // Perform search
         function performSearch(searchTerm) {
             if (!searchTerm.trim()) {
                 alert('検索語を入力してください');
@@ -245,7 +256,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             const searchTermLower = searchTerm.toLowerCase();
             
-            // Pesquisa diretamente nos dados originais
+            // Search directly in the original data
             bibleData.forEach(verse => {
                 if (verse.text.toLowerCase().includes(searchTermLower)) {
                     currentSearchResults.push({
@@ -261,13 +272,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             displaySearchResults();
         }
 
-        // Exibe resultados da pesquisa
+        // Display search results
         function displaySearchResults() {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
             
             if (currentSearchResults.length === 0) {
-                chapterTitle.textContent = '検索結果が見つかりませんでした';
+                chapterTitle.textContent = '結果が見つかりませんでした';
                 contentArea.innerHTML = '<p style="text-align: center; color: #7f8c8d;">別の検索語をお試しください。</p>';
                 return;
             }
@@ -288,19 +299,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             contentArea.innerHTML = html;
         }
 
-        // Destaca o termo pesquisado
+        // Highlight search term
         function highlightSearchTerm(text, searchTerm) {
             const regex = new RegExp(`(${searchTerm})`, 'gi');
             return text.replace(regex, '<span class="highlight">$1</span>');
         }
 
-        // Mostra indicador de carregamento
+        // Show loading indicator
         function showLoading(message = '読み込み中...') {
             document.getElementById('contentArea').innerHTML = 
                 `<div class="loading">⏳ ${message}</div>`;
         }
 
-        // Mostra mensagem de erro
+        // Show error message
         function showError() {
             document.getElementById('contentArea').innerHTML = `
                 <div style="text-align: center; padding: 20px;">
@@ -328,21 +339,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const bookName = e.target.value;
             if (bookName !== '') {
                 populateChapterSelector(bookName);
+            } else {
+                document.getElementById('chapterSelect').innerHTML = '<option value="">章を選択...</option>';
+                document.getElementById('chapterTitle').textContent = '';
+                document.getElementById('contentArea').innerHTML = '';
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+        document.getElementById('chapterSelect').addEventListener('change', (e) => {
             const bookName = document.getElementById('bookSelect').value;
-            const chapterNumber = document.getElementById('chapterSelect').value;
+            const chapterNumber = e.target.value;
             
             if (bookName !== '' && chapterNumber !== '') {
                 displayChapter(bookName, parseInt(chapterNumber));
-            } else {
-                alert('書名と章を選択してください');
             }
         });
 
-        // Carrega a Bíblia ao iniciar a página
+        // Load Bible when page starts
         window.addEventListener('load', loadBible);
     </script>
     <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
@@ -351,12 +364,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <li><a href="/">🏠 ホーム</a></li>
         <li><a href="/contato.html">お問い合わせ</a></li>
         <li><a href="/termos-de-uso.html">利用規約</a></li>
-        <li><a href="/politica-de-privacidade.html">プライバシーポリシー</a></li>
-        <li><a href="/sobre.html">当サイトについて</a></li>
+        <li><a href="/politica-de-privacidade.html">プライバシー</a></li>
+        <li><a href="/sobre.html">について</a></li>
     </ul>
 </nav>
-    <p>&copy; 聖書検索システム | 開発: <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a></p>
-    <p>全著作権所有.</p>
+    <p>&copy; 聖書検索システム | 開発者: <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a></p>
+    <p>All rights reserved.</p>
 </footer>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NNN24HJD"
@@ -364,11 +377,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <script src="/app/script.js"></script>
 <script>
-// Bloqueia Ctrl + U
+// Block Ctrl + U
 document.addEventListener("keydown", function(e) {
     if (e.ctrlKey && e.key.toLowerCase() === 'u') {
         e.preventDefault();
-        alert("ソースコード表示は無効化されています。");
+        alert("ソースコードの表示は無効です。");
     }
 });
 </script>

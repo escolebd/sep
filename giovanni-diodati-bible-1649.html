@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="Bibbia Italiana – Versione Giovanni Diodati (1649), traduzione storica e autorevole delle Sacre Scritture in lingua italiana.">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://septuaginta.com.br/styles.css">
 </head>
 <body>
     <div class="container">
@@ -56,7 +56,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <h1>📖 Giovanni Diodati Bible (1649)</h1>
             <p>Esplora le Sacre Scritture</p>
             <footer style="margin-top: 50px; text-align: center;">
-  <p>Cerca sul sito:</p>
+  <p>Cerca sul sito web:</p>
   <form action="https://www.google.com/search" method="get" class="search-form">
     <input type="text" name="q" placeholder="Cerca qui..." required
            style="padding: 8px; width: 250px; max-width: 90%; border: 1px solid #ccc; border-radius: 5px;">
@@ -73,9 +73,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <ul class="nav-list">
         <li><a href="/">🏠 Home</a></li>
         <li><a href="/contato.html">Contatto</a></li>
-        <li><a href="/termos-de-uso.html">Termini d'uso</a></li>
+        <li><a href="/termos-de-uso.html">Termini d'Uso</a></li>
         <li><a href="/politica-de-privacidade.html">Privacy</a></li>
-        <li><a href="/sobre.html">Chi siamo</a></li>
+        <li><a href="/sobre.html">Chi Siamo</a></li>
         <li><a href="/">📖 Altri</a></li>
     </ul>
 </nav>
@@ -92,7 +92,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <select id="chapterSelect" class="chapter-select">
                     <option value="">Seleziona un capitolo...</option>
                 </select>
-                <button id="loadChapterBtn" class="search-btn">Carica capitolo</button>
             </div>
         </div>
 
@@ -105,15 +104,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script>
         let bibleData = [];
         let currentSearchResults = [];
-        let organizedData = {}; // To organize data by book and chapter
+        let organizedData = {}; // Per organizzare i dati per libro e capitolo
 
-        // Load Bible from API
+        // Carica la Bibbia dall'API
         async function loadBible() {
             try {
                 showLoading();
                 
-                // OSB API call
-                const response = await fetch('/diodati.json');
+                // Chiamata API OSB
+                const response = await fetch('https://septuaginta.com.br/diodati.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
@@ -136,7 +135,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
-        // Organize data by book and chapter for easier navigation
+        // Organizza i dati per libro e capitolo per una navigazione più facile
         function organizeData() {
             organizedData = {};
             
@@ -159,7 +158,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 });
             });
             
-            // Sort verses within each chapter
+            // Ordina i versetti all'interno di ogni capitolo
             Object.keys(organizedData).forEach(book => {
                 Object.keys(organizedData[book]).forEach(chapter => {
                     organizedData[book][chapter].sort((a, b) => a.verse - b.verse);
@@ -167,18 +166,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Load initial content (first book, first chapter)
+        // Carica il contenuto iniziale (primo libro, primo capitolo)
         async function loadInitialContent() {
             const firstBook = Object.keys(organizedData)[0];
             if (firstBook) {
                 const firstChapter = Object.keys(organizedData[firstBook])[0];
                 if (firstChapter) {
+                    // Imposta i selettori del libro e del capitolo
+                    document.getElementById('bookSelect').value = firstBook;
+                    populateChapterSelector(firstBook);
+                    document.getElementById('chapterSelect').value = firstChapter;
+                    
+                    // Mostra il capitolo
                     displayChapter(firstBook, parseInt(firstChapter));
                 }
             }
         }
 
-        // Populate book selector
+        // Popola il selettore dei libri
         function populateBookSelector() {
             const bookSelect = document.getElementById('bookSelect');
             bookSelect.innerHTML = '<option value="">Seleziona un libro...</option>';
@@ -191,7 +196,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         }
 
-        // Populate chapter selector
+        // Popola il selettore dei capitoli
         function populateChapterSelector(bookName) {
             const chapterSelect = document.getElementById('chapterSelect');
             chapterSelect.innerHTML = '<option value="">Seleziona un capitolo...</option>';
@@ -204,10 +209,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     option.textContent = `Capitolo ${chapter}`;
                     chapterSelect.appendChild(option);
                 });
+                
+                // Seleziona automaticamente il primo capitolo
+                if (chapters.length > 0) {
+                    chapterSelect.value = chapters[0];
+                    displayChapter(bookName, parseInt(chapters[0]));
+                }
             }
         }
 
-        // Display a chapter
+        // Mostra un capitolo
         function displayChapter(bookName, chapterNumber) {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
@@ -233,10 +244,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         }
 
-        // Perform search
+        // Esegui la ricerca
         function performSearch(searchTerm) {
             if (!searchTerm.trim()) {
-                alert('Inserisci un termine di ricerca');
+                alert('Per favore inserisci un termine di ricerca');
                 return;
             }
 
@@ -245,7 +256,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             const searchTermLower = searchTerm.toLowerCase();
             
-            // Search directly in the original data
+            // Cerca direttamente nei dati originali
             bibleData.forEach(verse => {
                 if (verse.text.toLowerCase().includes(searchTermLower)) {
                     currentSearchResults.push({
@@ -261,7 +272,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             displaySearchResults();
         }
 
-        // Display search results
+        // Mostra i risultati della ricerca
         function displaySearchResults() {
             const chapterTitle = document.getElementById('chapterTitle');
             const contentArea = document.getElementById('contentArea');
@@ -288,24 +299,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             contentArea.innerHTML = html;
         }
 
-        // Highlight search term
+        // Evidenzia il termine di ricerca
         function highlightSearchTerm(text, searchTerm) {
             const regex = new RegExp(`(${searchTerm})`, 'gi');
             return text.replace(regex, '<span class="highlight">$1</span>');
         }
 
-        // Show loading indicator
+        // Mostra l'indicatore di caricamento
         function showLoading(message = 'Caricamento...') {
             document.getElementById('contentArea').innerHTML = 
                 `<div class="loading">⏳ ${message}</div>`;
         }
 
-        // Show error message
+        // Mostra il messaggio di errore
         function showError() {
             document.getElementById('contentArea').innerHTML = `
                 <div style="text-align: center; padding: 20px;">
                     <h2 style="color: #e74c3c;">Errore nel caricamento della Bibbia</h2>
-                    <p style="color: #7f8c8d;">Impossibile caricare i dati dall'API.</p>
+                    <p style="color: #7f8c8d;">Impossibile caricare i dati dall\'API.</p>
                     <button onclick="location.reload()" class="search-btn" style="margin-top: 15px;">Riprova</button>
                 </div>
             `;
@@ -328,21 +339,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const bookName = e.target.value;
             if (bookName !== '') {
                 populateChapterSelector(bookName);
+            } else {
+                document.getElementById('chapterSelect').innerHTML = '<option value="">Seleziona un capitolo...</option>';
+                document.getElementById('chapterTitle').textContent = '';
+                document.getElementById('contentArea').innerHTML = '';
             }
         });
 
-        document.getElementById('loadChapterBtn').addEventListener('click', () => {
+        document.getElementById('chapterSelect').addEventListener('change', (e) => {
             const bookName = document.getElementById('bookSelect').value;
-            const chapterNumber = document.getElementById('chapterSelect').value;
+            const chapterNumber = e.target.value;
             
             if (bookName !== '' && chapterNumber !== '') {
                 displayChapter(bookName, parseInt(chapterNumber));
-            } else {
-                alert('Seleziona un libro e un capitolo');
             }
         });
 
-        // Load Bible when page starts
+        // Carica la Bibbia all'avvio della pagina
         window.addEventListener('load', loadBible);
     </script>
     <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
@@ -350,12 +363,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <ul class="nav-list">
         <li><a href="/">🏠 Home</a></li>
         <li><a href="/contato.html">Contatto</a></li>
-        <li><a href="/termos-de-uso.html">Termini d'uso</a></li>
+        <li><a href="/termos-de-uso.html">Termini d'Uso</a></li>
         <li><a href="/politica-de-privacidade.html">Privacy</a></li>
-        <li><a href="/sobre.html">Chi siamo</a></li>
+        <li><a href="/sobre.html">Chi Siamo</a></li>
     </ul>
 </nav>
-    <p>&copy; Sistema di Ricerca Biblica | Sviluppato da <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a></p>
+    <p>&copy; Bible Search System | Sviluppato da <a href="https://septuaginta.com.br/" target="_blank" style="color: #f1c40f; text-decoration: none;">Septuaginta.com.br</a></p>
     <p>Tutti i diritti riservati.</p>
 </footer>
 <!-- Google Tag Manager (noscript) -->
@@ -364,7 +377,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <script src="/app/script.js"></script>
 <script>
-// Block Ctrl + U
+// Blocca Ctrl + U
 document.addEventListener("keydown", function(e) {
     if (e.ctrlKey && e.key.toLowerCase() === 'u') {
         e.preventDefault();
