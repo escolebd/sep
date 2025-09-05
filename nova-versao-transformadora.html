@@ -249,6 +249,49 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             font-size: 1rem;
         }
     }
+/* Estilos para o botão de compartilhamento */
+.share-button {
+            display: flex;
+            gap: 10px;
+        }
+        .share-button a {
+            text-decoration: none;
+            padding: 10px 10px;
+            color: white;
+            border-radius: 5px;
+            font-size: 10px;
+        }
+        .whatsapp { background: #25D366; }
+        .facebook { background: #1877F2; }
+        .twitter { background: #1DA1F2; }]
+
+/* Estilos para o blogger-box */
+.blogger-box {
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fdfdfd;
+      max-width: 800px;
+      margin: 20px auto;
+      line-height: 1.6;
+      font-family: Arial, sans-serif;
+      font-weight: normal !important;
+    }
+    
+    .blogger-box b {
+      font-weight: bold !important; /* Mantém apenas os <b> */
+    }
+
+    .blogger-box center {
+      display: block;
+      text-align: center;
+    }
+
+    .blogger-box img {
+      max-width: 100%;
+      height: auto;
+    }
+
 </style>
 
 <meta name="google-site-verification" content="_BtnsqwRzINSsO9ssJ4f5zAelQtxVe1rsLCy9cxOmDw" />
@@ -297,6 +340,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <a href="/nova-traducao-na-linguagem-de-hoje.html">📖 NTLH</a>
   <a href="/">📖 OUTROS</a>
 </nav>
+<div class="blogger-box">
         <div class="search-container">
             <div class="search-box">
                 <input type="text" id="searchInput" class="search-input" placeholder="pesquisa na Bíblia aqui..." />
@@ -318,14 +362,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="content">
             <div id="chapterTitle" class="chapter-title"></div>
             <div id="contentArea"></div>
-<div class="share-buttons" style="margin-top: 20px; text-align: center;">
-  <p style="margin-bottom: 10px; color: #7f8c8d;">Compartilhar:</p>
-  <a href="https://api.whatsapp.com/send?text=Confira%20esta%20Bíblia:%20https://www.septuaginta.com.br" target="_blank" title="WhatsApp" style="margin: 0 5px;">📱</a>
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.septuaginta.com.br" target="_blank" title="Facebook" style="margin: 0 5px;">📘</a>
-  <a href="https://twitter.com/intent/tweet?text=Confira%20esta%20Bíblia&url=https://www.septuaginta.com.br" target="_blank" title="Twitter" style="margin: 0 5px;">🐦</a>
-  <button onclick="copyShareLink()" title="Copiar link" style="margin-left: 10px; padding: 4px 8px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">🔗 Copiar link</button>
-</div>
 
+<!-- botão de compartilhamento -->
+    <div style="margin: 30px 0; text-align: center;">
+      <p><strong>Ajude-nos a divulgar compartilhando com os seus amigos!</strong></p>
+      <div class="share-button">
+        <a class="whatsapp" href="https://api.whatsapp.com/send?text=Confira%20esta%20página:%20" target="_blank">WhatsApp</a>
+        <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">Facebook</a>
+        <a class="twitter" href="https://twitter.com/intent/tweet?url=" target="_blank">Twitter</a>
+              </div>
+            </div>
         </div>
     </div>
 
@@ -340,7 +386,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // Usando CORS proxy apenas se necessário
-                const apiUrl = '/nvt.json';
+                const apiUrl = 'https://septuaginta.com.br/nvt.json';
                 let response;
                 
                 try {
@@ -589,16 +635,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Carrega a Bíblia ao iniciar a página
         window.addEventListener('load', loadBible);
         
-        function copyShareLink() {
-            const url = "https://www.septuaginta.com.br";
-            navigator.clipboard.writeText(url).then(() => {
-                alert("Link copiado para a área de transferência!");
-            }).catch(() => {
-                alert("Não foi possível copiar o link.");
-            });
-        }
+        // botão de compartilhamento
+        document.addEventListener("DOMContentLoaded", function() {
+        const url = encodeURIComponent(window.location.href);
+        document.querySelector(".whatsapp").href += url;
+        document.querySelector(".facebook").href += url;
+        document.querySelector(".twitter").href += url;
+      });
+        
     </script>
-
+</div>
 <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
     <nav class="navbar">
     <ul class="nav-list">
