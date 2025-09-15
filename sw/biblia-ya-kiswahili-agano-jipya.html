@@ -111,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // Wito wa API ya OSB
-                const response = await fetch('https://septuaginta.com.br/swahili.json');
+                const response = await fetch('https://septuaginta.com.br/sw/swahili.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {

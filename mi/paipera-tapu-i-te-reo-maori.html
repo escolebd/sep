@@ -111,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // Karanga API OSB
-                const response = await fetch('https://septuaginta.com.br/maori.json');
+                const response = await fetch('https://septuaginta.com.br/mi/maori.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {

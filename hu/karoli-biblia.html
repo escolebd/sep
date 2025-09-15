@@ -111,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 showLoading();
                 
                 // OSB API hívás
-                const response = await fetch('https://septuaginta.com.br/karoli.json');
+                const response = await fetch('https://septuaginta.com.br/hu/karoli.json');
                 const data = await response.json();
                 
                 if (data && data.verses) {
