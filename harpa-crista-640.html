@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Harpa Cristã 640</title>
   <!-- Google Tag Manager -->
@@ -47,7 +47,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="icon" href="https://septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="Harpa Cristã: 640 hinos oficiais da Assembleia de Deus, com letras e melodias para louvor e adoração.">
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://septuaginta.com.br/styles.css">
     <style>
         * {
             margin: 0;
@@ -284,8 +284,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-
- .blogger-box {
+.blogger-box {
       padding: 20px;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -313,7 +312,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </style>
 </head>
 <body>
-   <div class="container">
+ <div class="container">
     <div class="header">
       <h1>Harpa Cristã 640</h1>
     </div>
@@ -343,6 +342,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <a href="/nova-traducao-na-linguagem-de-hoje.html">📖 NTLH</a>
 </nav>
 <div class="blogger-box">
+    <div class="container">
+        <div class="header">
+            <h1>🎵 Harpa Cristã</h1>
+            <p>Hinário Completo - 640 Hinos</p>
+            <div class="author-info">
+                <p>👉 Hinos oficiais da Assembleia de Deus</p>
+            </div>
+        </div>
         
         <div class="main-content">
             <div class="hymn-display">
@@ -359,12 +366,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </div>
         </div>
     </div>
-    </div>
+    
     <button class="scroll-to-top" id="scroll-to-top" onclick="scrollToTop()">↑</button>
-
+</div>
     <script>
         // Dados dos hinos (baseado no seu exemplo)
-        const hymnsData = {
+        const hymnsData =  {
   "-1": {
     "Author": "Daniel Liberato da Silva",
     "date": "11-11-2023",
@@ -6506,6 +6513,47 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 }
 
 
+        // Função para extrair número do hino da URL
+        function getHymnNumberFromUrl() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                // Pode ser só o número ou o formato completo
+                let number;
+                if (hash.includes('-')) {
+                    // Formato: #1-chuvas-de-graca
+                    number = parseInt(hash.split('-')[0]);
+                } else {
+                    // Formato: #1
+                    number = parseInt(hash);
+                }
+                
+                if (number >= 1 && number <= 640) {
+                    return number;
+                }
+            }
+            return 1; // Padrão para hino 1
+        }
+
+        // Função para atualizar URL
+        function updateUrl(hymnNumber) {
+            let newHash;
+            
+            if (hymnsData[hymnNumber] && hymnsData[hymnNumber].url) {
+                newHash = `#${hymnsData[hymnNumber].url}`;
+            } else {
+                newHash = `#${hymnNumber}-hino-${hymnNumber}`;
+            }
+            
+            // Atualizar hash na URL
+            window.location.hash = newHash;
+            
+            // Atualizar title da página
+            const hymnTitle = hymnsData[hymnNumber] ? 
+                hymnsData[hymnNumber].hino : 
+                `Hino ${hymnNumber}`;
+            document.title = `${hymnTitle} - Harpa Cristã`;
+        }
+
         let currentHymn = 1;
 
         // Gerar grid de números
@@ -6528,8 +6576,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         // Carregar hino
-        function loadHymn(number) {
+        function loadHymn(number, updateHistory = true) {
             currentHymn = number;
+            
+            // Atualizar URL se necessário
+            if (updateHistory) {
+                updateUrl(number);
+            }
             
             // Atualizar botões ativos
             document.querySelectorAll('.hymn-number').forEach(btn => {
@@ -6617,7 +6670,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             generateNumbersGrid();
-            loadHymn(1); // Carregar o primeiro hino por padrão
+            
+            // Verificar se há um hino específico na URL
+            const hymnFromUrl = getHymnNumberFromUrl();
+            loadHymn(hymnFromUrl, false); // false para não atualizar history na inicialização
+        });
+
+        // Gerenciar navegação do browser (botões voltar/avançar)
+        window.addEventListener('hashchange', () => {
+            const hymnFromUrl = getHymnNumberFromUrl();
+            loadHymn(hymnFromUrl, false);
         });
 
         // Adicionar funcionalidade de busca por teclado
@@ -6631,7 +6693,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
         });
     </script>
- <footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
+<footer style="background: linear-gradient(45deg, #2c3e50, #3498db); color: white; text-align: center; padding: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: 40px;">
     <nav class="navbar">
       <ul class="nav-list">
         <li><a href="/">🏠 Início</a></li>
