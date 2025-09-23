@@ -3,4 +3,5 @@ Disallow:
 
 Sitemap: https://www.septuaginta.com.br/sitemap.xml
 Sitemap: https://www.septuaginta.com.br/ebd/sitemap.xml
+Sitemap: https://www.septuaginta.com.br/sitemap-harpa.xml
 
