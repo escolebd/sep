@@ -15,7 +15,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://www.septuaginta.com.br/"
+    "@id": "https://www.septuaginta.com.br/almeida-corrigida-e-fiel"
   },
   "headline": "Bíblia Almeida Corrigida e Fiel",
   "image": [
@@ -33,7 +33,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "name": "Septuaginta",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.septuaginta.com.br/app/imagens/varias-biblias.webp"
+      "url": "https://www.septuaginta.com.br/app/imagens/512x512.png"
     }
   },
   "description": "Bíblia Almeida Corrigida e Fiel: tradução fiel aos textos originais, preservando a linguagem reverente e tradicional."
@@ -48,6 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:image" content="https://www.septuaginta.com.br/app/imagens/varias-biblias.webp">
 <link rel="icon" href="https://www.septuaginta.com.br/app/imagens/512x512.png" type="image/x-icon">
 <meta name="description" content="Bíblia Almeida Corrigida e Fiel: tradução fiel aos textos originais, preservando a linguagem reverente e tradicional.">
+
 <style>
     /* Estilos básicos */
     * {
@@ -190,7 +191,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         padding-left: 10px;
         border-left: 3px solid transparent;
         transition: border-left-color 0.3s;
-        position: relative;
     }
     
     .verse:hover {
@@ -201,23 +201,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         font-weight: bold;
         color: #3498db;
         margin-right: 8px;
-    }
-    
-    .verse-share-btn {
-        background: none;
-        border: none;
-        color: #7f8c8d;
-        cursor: pointer;
-        font-size: 14px;
-        margin-left: 10px;
-        padding: 2px 6px;
-        border-radius: 3px;
-        transition: all 0.3s;
-    }
-    
-    .verse-share-btn:hover {
-        background-color: #f0f0f0;
-        color: #3498db;
     }
     
     .loading {
@@ -247,162 +230,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         font-weight: bold;
     }
     
-    /* Modal de compartilhamento */
-    .share-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .share-modal-content {
-        background-color: white;
-        padding: 25px;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .share-modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .share-modal-title {
-        font-size: 20px;
-        color: #2c3e50;
-    }
-    
-    .share-modal-close {
-        background: none;
-        border: none;
-        font-size: 24px;
-        cursor: pointer;
-        color: #7f8c8d;
-    }
-    
-    .share-verse-info {
-        margin-bottom: 20px;
-        padding: 15px;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-    }
-    
-    .share-verse-reference {
-        font-weight: bold;
-        color: #2c3e50;
-        margin-bottom: 5px;
-    }
-    
-    .share-verse-text {
-        color: #333;
-        font-style: italic;
-    }
-    
-    .share-options {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .share-option {
-        flex: 1;
-        min-width: 120px;
-        padding: 12px;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
-        transition: background-color 0.3s;
-    }
-    
-    .share-option:hover {
-        background-color: #2980b9;
-    }
-    
-    .share-option.whatsapp {
-        background-color: #25D366;
-    }
-    
-    .share-option.whatsapp:hover {
-        background-color: #128C7E;
-    }
-    
-    .share-option.facebook {
-        background-color: #3b5998;
-    }
-    
-    .share-option.facebook:hover {
-        background-color: #2d4373;
-    }
-    
-    .share-option.twitter {
-        background-color: #1DA1F2;
-    }
-    
-    .share-option.twitter:hover {
-        background-color: #0d8bd9;
-    }
-    
-    .share-link-container {
-        display: flex;
-        margin-top: 15px;
-    }
-    
-    .share-link-input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px 0 0 5px;
-        font-size: 14px;
-    }
-    
-    .share-link-copy {
-        padding: 10px 15px;
-        background-color: #2c3e50;
-        color: white;
-        border: none;
-        border-radius: 0 5px 5px 0;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    
-    .share-link-copy:hover {
-        background-color: #1a252f;
-    }
-    
-    .toast {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        background-color: #2c3e50;
-        color: white;
-        border-radius: 5px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        z-index: 1001;
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-    
-    .toast.show {
-        opacity: 1;
-    }
-    
     @media (max-width: 768px) {
         .search-box, .book-selector {
             flex-direction: column;
@@ -421,16 +248,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .header p {
             font-size: 1rem;
         }
-        
-        .share-options {
-            flex-direction: column;
-        }
-        
-        .share-option {
-            min-width: 100%;
-        }
     }
 </style>
+
 <meta name="google-site-verification" content="_BtnsqwRzINSsO9ssJ4f5zAelQtxVe1rsLCy9cxOmDw" />
 <meta name="msvalidate.01" content="7F39B7B30C568008CE65B3CDA94E6F47" />
 <link rel="alternate" href="https://www.septuaginta.com.br/almeida-corrigida-e-fiel.html" hreflang="pt-BR" />
@@ -539,38 +359,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
     </div>
 
-    <!-- Modal de compartilhamento de versículo -->
-    <div id="shareModal" class="share-modal">
-        <div class="share-modal-content">
-            <div class="share-modal-header">
-                <h3 class="share-modal-title">Compartilhar Versículo</h3>
-                <button class="share-modal-close">&times;</button>
-            </div>
-            <div class="share-verse-info">
-                <div class="share-verse-reference" id="shareVerseReference"></div>
-                <div class="share-verse-text" id="shareVerseText"></div>
-            </div>
-            <div class="share-options">
-                <button class="share-option whatsapp" id="shareWhatsApp">WhatsApp</button>
-                <button class="share-option facebook" id="shareFacebook">Facebook</button>
-                <button class="share-option twitter" id="shareTwitter">Twitter</button>
-            </div>
-            <div class="share-link-container">
-                <input type="text" id="shareLinkInput" class="share-link-input" readonly>
-                <button class="share-link-copy" id="copyShareLink">Copiar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast para notificações -->
-    <div id="toast" class="toast"></div>
-
     <script>
         let bibleData = [];
         let currentSearchResults = [];
         let loadedBooks = new Set(); // Para rastrear quais livros já foram carregados
-        let currentBook = null;
-        let currentChapter = null;
 
         // Carrega a Bíblia da API específica com carregamento otimizado
         async function loadBible() {
@@ -681,10 +473,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const chapterIndex = document.getElementById('chapterSelect').value;
             
             if (bookIndex !== '' && chapterIndex !== '') {
-                currentBook = bibleData[bookIndex];
-                currentChapter = parseInt(chapterIndex);
-                const bookName = getFullBookName(currentBook.abbrev);
-                displayChapter(currentBook, currentChapter, bookName);
+                const book = bibleData[bookIndex];
+                const bookName = getFullBookName(book.abbrev);
+                displayChapter(book, parseInt(chapterIndex), bookName);
             }
         }
 
@@ -702,100 +493,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <div class="verse">
                         <span class="verse-number">${index + 1}</span>
                         <span class="verse-text">${verse}</span>
-                        <button class="verse-share-btn" onclick="openShareModal('${bookName}', ${chapterIndex + 1}, ${index + 1}, '${verse.replace(/'/g, "\\'")}')">📤</button>
                     </div>
                 `;
             });
             
             contentArea.innerHTML = html;
-        }
-
-        // Abre o modal de compartilhamento
-        function openShareModal(bookName, chapter, verse, verseText) {
-            const modal = document.getElementById('shareModal');
-            const reference = document.getElementById('shareVerseReference');
-            const text = document.getElementById('shareVerseText');
-            const linkInput = document.getElementById('shareLinkInput');
-            
-            // Atualiza as informações do versículo
-            reference.textContent = `${bookName} ${chapter}:${verse}`;
-            text.textContent = verseText;
-            
-            // Gera o link de compartilhamento
-            const shareUrl = generateVerseUrl(bookName, chapter, verse);
-            linkInput.value = shareUrl;
-            
-            // Configura os botões de compartilhamento
-            setupShareButtons(bookName, chapter, verse, verseText, shareUrl);
-            
-            // Exibe o modal
-            modal.style.display = 'flex';
-        }
-
-        // Gera URL para o versículo específico
-        function generateVerseUrl(bookName, chapter, verse) {
-            const baseUrl = window.location.href.split('?')[0];
-            const params = new URLSearchParams({
-                book: bookName,
-                chapter: chapter,
-                verse: verse
-            });
-            return `${baseUrl}?${params.toString()}`;
-        }
-
-        // Configura os botões de compartilhamento
-        function setupShareButtons(bookName, chapter, verse, verseText, shareUrl) {
-            const encodedText = encodeURIComponent(`${bookName} ${chapter}:${verse} - "${verseText}" - ${shareUrl}`);
-            
-            // WhatsApp
-            document.getElementById('shareWhatsApp').onclick = () => {
-                window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
-            };
-            
-            // Facebook
-            document.getElementById('shareFacebook').onclick = () => {
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodedText}`, '_blank');
-            };
-            
-            // Twitter
-            document.getElementById('shareTwitter').onclick = () => {
-                window.open(`https://twitter.com/intent/tweet?text=${encodedText}`, '_blank');
-            };
-            
-            // Copiar link
-            document.getElementById('copyShareLink').onclick = () => {
-                copyToClipboard(shareUrl);
-                showToast('Link copiado para a área de transferência!');
-            };
-        }
-
-        // Fecha o modal de compartilhamento
-        function closeShareModal() {
-            document.getElementById('shareModal').style.display = 'none';
-        }
-
-        // Copia texto para a área de transferência
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).catch(() => {
-                // Fallback para navegadores mais antigos
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            });
-        }
-
-        // Exibe uma notificação toast
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
         }
 
         // Realiza pesquisa
@@ -850,10 +552,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 const highlightedText = highlightSearchTerm(result.text, result.searchTerm);
                 html += `
                     <div class="search-result-item">
-                        <div class="result-reference">
-                            ${result.book} ${result.chapter}:${result.verse}
-                            <button class="verse-share-btn" onclick="openShareModal('${result.book}', ${result.chapter}, ${result.verse}, '${result.text.replace(/'/g, "\\'")}')">📤</button>
-                        </div>
+                        <div class="result-reference">${result.book} ${result.chapter}:${result.verse}</div>
                         <div class="result-text">${highlightedText}</div>
                     </div>
                 `;
@@ -883,13 +582,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <button onclick="location.reload()" class="search-btn" style="margin-top: 15px;">Tentar Novamente</button>
                 </div>
             `;
-        }
-
-        // Função para copiar o link de compartilhamento da página
-        function copyShareLink() {
-            const url = "https://septuaginta.com.br/almeida-corrigida-e-fiel.html";
-            copyToClipboard(url);
-            showToast("Link copiado para a área de transferência!");
         }
 
         // Event Listeners
@@ -924,62 +616,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             loadSelectedChapter();
         });
 
-        // Fechar modal ao clicar no X
-        document.querySelector('.share-modal-close').addEventListener('click', closeShareModal);
-
-        // Fechar modal ao clicar fora dele
-        document.getElementById('shareModal').addEventListener('click', (e) => {
-            if (e.target.id === 'shareModal') {
-                closeShareModal();
-            }
-        });
-
         // Carrega a Bíblia ao iniciar a página
         window.addEventListener('load', loadBible);
         
-        // Verifica se há parâmetros de versículo na URL
-        window.addEventListener('load', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const book = urlParams.get('book');
-            const chapter = urlParams.get('chapter');
-            const verse = urlParams.get('verse');
-            
-            if (book && chapter && verse) {
-                // Aguarda a Bíblia carregar e depois navega para o versículo
-                setTimeout(() => {
-                    navigateToVerse(book, parseInt(chapter), parseInt(verse));
-                }, 500);
-            }
-        });
-
-        // Navega para um versículo específico
-        function navigateToVerse(bookName, chapter, verse) {
-            // Encontra o índice do livro
-            const bookIndex = bibleData.findIndex(book => getFullBookName(book.abbrev) === bookName);
-            
-            if (bookIndex !== -1) {
-                // Define o livro
-                document.getElementById('bookSelect').value = bookIndex;
-                populateChapterSelector(bookIndex);
-                
-                // Define o capítulo
-                document.getElementById('chapterSelect').value = chapter - 1;
-                
-                // Carrega o capítulo
-                loadSelectedChapter();
-                
-                // Rola para o versículo específico
-                setTimeout(() => {
-                    const verseElement = document.querySelector(`.verse:nth-child(${verse})`);
-                    if (verseElement) {
-                        verseElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        verseElement.style.backgroundColor = '#f0f8ff';
-                        setTimeout(() => {
-                            verseElement.style.backgroundColor = '';
-                        }, 3000);
-                    }
-                }, 300);
-            }
+        function copyShareLink() {
+            const url = "https://septuaginta.com.br/almeida-corrigida-e-fiel.html";
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Link copiado para a área de transferência!");
+            }).catch(() => {
+                alert("Não foi possível copiar o link.");
+            });
         }
     </script>
 
